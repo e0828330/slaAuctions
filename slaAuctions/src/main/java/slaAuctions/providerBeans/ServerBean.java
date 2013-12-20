@@ -1,4 +1,4 @@
-package slaAuctions.server;
+package slaAuctions.providerBeans;
 
 import java.rmi.RemoteException;
 import java.util.HashMap;

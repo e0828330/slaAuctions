@@ -2,6 +2,7 @@ package slaAuctions.server;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import slaAuctions.providerBeans.ServerBean;
 import slaAuctions.utils.DataGridConnectionUtility;
 
 public class Main {

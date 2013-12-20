@@ -1,4 +1,4 @@
-package slaAuctions.server;
+package slaAuctions.customerBeans;
 
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.context.GigaSpaceContext;
