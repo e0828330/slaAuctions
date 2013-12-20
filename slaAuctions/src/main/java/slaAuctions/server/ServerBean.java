@@ -1,6 +1,8 @@
 package slaAuctions.server;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.jini.core.entry.UnusableEntryException;
 import net.jini.core.event.RemoteEvent;
@@ -28,13 +30,17 @@ public class ServerBean {
 	 * Write 2 templates into the space
 	 */
 	public void write() {
+		Map<String, Integer> values = new HashMap<String, Integer>();
+		values.put("price", 1000);
 		Template tpl = new Template();
-		tpl.setPrice(1000);
+		tpl.setCurrentValues(values);
 		space.write(tpl);
+		
+		values = new HashMap<String, Integer>();
 		tpl = new Template();
-		tpl.setPrice(8000);
+		values.put("price", 8000);
+		tpl.setCurrentValues(values);
 		space.write(tpl);
-		System.out.println(space);
 	}
 	
 	/**
@@ -51,7 +57,7 @@ public class ServerBean {
 				EntryArrivedRemoteEvent arrivedRemoteEvent = (EntryArrivedRemoteEvent) event;
 				try {
 					Template tpl = (Template) arrivedRemoteEvent.getObject();
-					System.out.println("Element with price " + tpl.getPrice()
+					System.out.println("Element with price " + tpl.getCurrentValues().get("price")
 							+ " got taken!");
 				} catch (UnusableEntryException e) {
 					e.printStackTrace();

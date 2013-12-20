@@ -21,8 +21,8 @@ public class TestBean {
 	 * @throws Exception
 	 */
 	public void take(boolean error) throws Exception {
-		Template result = space.take(new SQLQuery<Template>(Template.class, "price < ?", 2000), Integer.MAX_VALUE);
-		System.out.println(result.getPrice());
+		Template result = space.take(new SQLQuery<Template>(Template.class, "currentValues.price < ?", 2000), Integer.MAX_VALUE);
+		System.out.println(result.getCurrentValues().get("price"));
 		if (error) {
 			throw new Exception("WTF");
 		}
