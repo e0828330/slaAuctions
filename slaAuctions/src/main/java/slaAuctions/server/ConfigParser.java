@@ -3,12 +3,11 @@ package slaAuctions.server;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
-
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class ConfigParser {
 	public static void main(String[] args) throws InvalidFileFormatException, IOException {
@@ -23,6 +22,7 @@ public class ConfigParser {
 				if (key.equals("Provider") || key.equals("Customer")) {
 					continue;
 				}
+
 				nd = new NormalDistribution(Double.parseDouble(ini.get(key, "mean")), Double.parseDouble(ini.get(key, "sd")));
 				
 				if (!key.equals("Price")) {
