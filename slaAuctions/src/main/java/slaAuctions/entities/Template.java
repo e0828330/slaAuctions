@@ -6,7 +6,6 @@ import java.util.Map;
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
 
-
 @SpaceClass
 public class Template {
 	private String uid;
