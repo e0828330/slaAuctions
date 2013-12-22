@@ -7,5 +7,5 @@ import com.gigaspaces.annotation.pojo.SpaceClass;
  */
 @SpaceClass
 public class DoubleAuctionTemplate extends Template {
-
+	public DoubleAuctionTemplate() { }
 }

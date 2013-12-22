@@ -10,6 +10,8 @@ import com.gigaspaces.annotation.pojo.SpaceId;
 public class Template {
 	private String uid;
 
+	private Integer providerId;
+	
 	/* Maps for the properties, have min, max and current values */
 	private Map<String, Integer> minValues;
 	private Map<String, Integer> maxValues;
@@ -57,5 +59,15 @@ public class Template {
 
 	public void setCurrentValues(Map<String, Integer> currentValues) {
 		this.currentValues = currentValues;
+	}
+
+
+	public Integer getProviderId() {
+		return providerId;
+	}
+
+
+	public void setProviderId(Integer providerId) {
+		this.providerId = providerId;
 	}
 }
