@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import slaAuctions.customerBeans.RevEnglishCustomerBean;
 import slaAuctions.entities.Template;
+import slaAuctions.exceptions.TransactionAbortedException;
 
 public class RevEnglishCustomer extends Agent {
 
@@ -40,7 +41,11 @@ public class RevEnglishCustomer extends Agent {
 			}
 		}
 		if (!bestTpl.isEmpty()) {
-			bean.writeMatch(bestTpl);
+			try {
+				bean.writeMatch(bestTpl);
+			} catch (TransactionAbortedException e) {
+				System.out.println("To late :/");
+			}
 		}
 	}
 

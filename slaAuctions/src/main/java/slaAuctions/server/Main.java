@@ -49,7 +49,7 @@ public class Main {
 		maxValues.clear();
 		currentValues.clear();
 
-		/* Provider 1 */
+		/* Provider 2 */
 		minValues.put("Price", 100);
 		currentValues.put("Price", 300);
 		maxValues.put("Price", 300);
@@ -80,7 +80,22 @@ public class Main {
 		maxValues.clear();
 		currentValues.clear();
 		
-		executor.awaitTermination(8, TimeUnit.MINUTES);
+		/* Customer 2 */
+		
+		minValues.put("Price", 0);
+		maxValues.put("Price", 200);
+		minValues.put("Cores", 1);
+		maxValues.put("Cores", 3);
+		
+		Template customerTpl2 = new Template(minValues, currentValues, maxValues);
+		RevEnglishCustomer customer2 = new RevEnglishCustomer(context, customerTpl2);
+		executor.execute(customer2);
+
+		minValues.clear();
+		maxValues.clear();
+		currentValues.clear();
+		
+		executor.awaitTermination(2, TimeUnit.MINUTES);
 		
 	}
 

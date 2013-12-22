@@ -9,6 +9,7 @@ import com.j_spaces.core.client.SQLQuery;
 
 import slaAuctions.entities.Match;
 import slaAuctions.entities.Template;
+import slaAuctions.exceptions.TransactionAbortedException;
 
 @Transactional
 public class RevEnglishCustomerBean {
@@ -32,8 +33,11 @@ public class RevEnglishCustomerBean {
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public void writeMatch(String tplId) {
+	public void writeMatch(String tplId) throws TransactionAbortedException {
 		Template tpl = space.takeById(Template.class, tplId);
+		if (tpl == null) {
+			throw new TransactionAbortedException("Template no longer in the space!");
+		}
 		space.write(new Match(tpl.getProviderId()));
 		System.out.println("MATCH for " + tpl.getProviderId());
 	}
