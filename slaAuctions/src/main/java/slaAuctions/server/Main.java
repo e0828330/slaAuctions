@@ -30,17 +30,17 @@ public class Main {
 		ExecutorService executor = Executors.newCachedThreadPool();
 		
 		/* Hardcoded for test */
-		Map<String, Integer> minValues = new HashMap<String, Integer>();
+	/*	Map<String, Integer> minValues = new HashMap<String, Integer>();
 		Map<String, Integer> currentValues = new HashMap<String, Integer>();
 		Map<String, Integer> maxValues = new HashMap<String, Integer>();
 		
-		/* Provider 1 */
 		minValues.put("Price", 100);
 		currentValues.put("Price", 600);
 		maxValues.put("Price", 600);
 		currentValues.put("Cores", 2);
 		
 		Template providerTpl = new Template(minValues, currentValues, maxValues);
+		providerTpl.setProperty0(90);
 		providerTpl.setProviderId(1);
 		
 		RevEnglishProvider provider = new RevEnglishProvider(context, providerTpl);
@@ -50,7 +50,6 @@ public class Main {
 		maxValues.clear();
 		currentValues.clear();
 
-		/* Provider 2 */
 		minValues.put("Price", 100);
 		currentValues.put("Price", 300);
 		maxValues.put("Price", 300);
@@ -66,14 +65,13 @@ public class Main {
 		maxValues.clear();
 		currentValues.clear();
 		
-		/* Customer 1 */
-		
 		minValues.put("Price", 0);
 		maxValues.put("Price", 120);
-		minValues.put("Cores", 1);
-		maxValues.put("Cores", 4);
+		minValues.put("Cores", 4);
+		maxValues.put("Cores", 10);
 		
 		Template customerTpl = new Template(minValues, currentValues, maxValues);
+		providerTpl.setProperty0(100);
 		RevEnglishCustomer customer = new RevEnglishCustomer(context, customerTpl);
 		executor.execute(customer);
 
@@ -81,12 +79,11 @@ public class Main {
 		maxValues.clear();
 		currentValues.clear();
 		
-		/* Customer 2 */
-		
+		/*
 		minValues.put("Price", 0);
 		maxValues.put("Price", 200);
-		minValues.put("Cores", 1);
-		maxValues.put("Cores", 3);
+		minValues.put("Cores", 3);
+		maxValues.put("Cores", 9);
 		
 		Template customerTpl2 = new Template(minValues, currentValues, maxValues);
 		RevEnglishCustomer customer2 = new RevEnglishCustomer(context, customerTpl2);
@@ -94,9 +91,22 @@ public class Main {
 
 		minValues.clear();
 		maxValues.clear();
-		currentValues.clear();
+		currentValues.clear();*/
 		
-		executor.awaitTermination(2, TimeUnit.MINUTES);
+		
+		ConfigParser parser = new ConfigParser();
+		parser.doParse();
+		/*for (Template t : parser.getCustomer().get("english")) {
+			RevEnglishCustomer c = new RevEnglishCustomer(context, t);
+			executor.execute(c);
+		}*/
+		for (Template t : parser.getProvider().get("english")) {
+			RevEnglishProvider p = new RevEnglishProvider(context, t);
+			executor.execute(p);
+		}
+		
+		
+	//	executor.awaitTermination(2, TimeUnit.MINUTES);
 		
 	}
 

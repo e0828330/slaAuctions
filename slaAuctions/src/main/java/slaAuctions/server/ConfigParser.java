@@ -2,12 +2,14 @@ package slaAuctions.server;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
@@ -38,6 +40,8 @@ public class ConfigParser {
 	/* Stores the maximum number of properties */
 	private int maxProperies;
 
+	private ArrayList<String> properties = new ArrayList<String>();
+	
 	public void doParse() throws InvalidFileFormatException, IOException {
 		ini = new Ini(new File("src/main/resources/test.ini"));
 		provider.put("english", new ArrayList<Template>());
@@ -48,13 +52,45 @@ public class ConfigParser {
 			if (key.equals("Provider") || key.equals("Customer") || key.equals("Price")) {
 				continue;
 			}
+			properties.add(key);
 			maxProperies++;
 		}
 		
 		// TODO: Validate must at least have > 3 properties and a price
-		
 		parseEnglishProviders();
 		parseEnglishCustomers();
+	}
+	
+	private Template createTemplate(Integer providerId) {
+		Template tpl = new Template();
+		tpl.setProviderId(providerId);
+		
+		int i = 0;
+		
+		try {
+			for (String key : properties) {
+				if (key.equals("Price")) {
+					PropertyUtils.setSimpleProperty(tpl, "price_min", minValues.get("Price"));
+					PropertyUtils.setSimpleProperty(tpl, "price", currentValues.get("Price"));
+					PropertyUtils.setSimpleProperty(tpl, "price_max", minValues.get("Price"));
+				}
+				else {
+					PropertyUtils.setSimpleProperty(tpl, "property" + i + "_min", minValues.get(key));
+					PropertyUtils.setSimpleProperty(tpl, "property" + i + "_current", currentValues.get(key));
+					PropertyUtils.setSimpleProperty(tpl, "property" + i + "_max", minValues.get(key));
+				}
+				i++;
+			}
+			
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+		
+		return tpl;
 	}
 
 	private void parseEnglishProviders() {
@@ -69,11 +105,7 @@ public class ConfigParser {
 			
 			System.out.println("Number of properties: " + propertyCount);
 			
-			for (String key : ini.keySet()) {
-				if (key.equals("Provider") || key.equals("Customer")) {
-					continue;
-				}
-
+			for (String key : properties) {
 				nd = new NormalDistribution(Double.parseDouble(ini.get(key, "mean")), Double.parseDouble(ini.get(key, "sd")));
 
 				/* For providers only the price is variable */
@@ -98,9 +130,7 @@ public class ConfigParser {
 				}
 			}
 
-			Template tpl = new Template(minValues, currentValues, maxValues);
-			tpl.setProviderId(id - 1);
-			provider.get("english").add(tpl);
+			provider.get("english").add(createTemplate(id - 1));
 			System.out.println("----");
 		}
 	}
@@ -117,11 +147,8 @@ public class ConfigParser {
 			
 			System.out.println("Number of properties: " + propertyCount);
 
-			for (String key : ini.keySet()) {
-				if (key.equals("Provider") || key.equals("Customer")) {
-					continue;
-				}
-
+			for (String key : properties) {
+	
 				nd = new NormalDistribution(Double.parseDouble(ini.get(key, "mean")), Double.parseDouble(ini.get(key, "sd")));
 				
 				if (propertyCount > 0 || key.equals("Price")) {
@@ -141,8 +168,7 @@ public class ConfigParser {
 				}
 			}
 
-			Template tpl = new Template(minValues, currentValues, maxValues);
-			customer.get("english").add(tpl);
+			customer.get("english").add(createTemplate(null));
 			System.out.println("----");
 		}
 	}

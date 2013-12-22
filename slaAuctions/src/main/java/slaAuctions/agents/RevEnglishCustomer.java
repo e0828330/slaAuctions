@@ -14,7 +14,7 @@ public class RevEnglishCustomer extends Agent {
 		super(context, template);
 	}
 	
-	private int TIMEOUT = 60 * 1 * 1000; // 5 minutes hardcoded for now
+	private int TIMEOUT = 30 * 1 * 1000; // 5 minutes hardcoded for now
 
 	public void run() {
 		RevEnglishCustomerBean bean = (RevEnglishCustomerBean) context.getBean("revEnglishCustomerBean");
@@ -27,11 +27,12 @@ public class RevEnglishCustomer extends Agent {
 		
 		while(true) {
 			Template match = bean.waitForMatch(template);
-			if (match.getCurrentValues().get("Price") < currentPrice) {
+			/*if (match.getCurrentValues().get("Price") < currentPrice) {
+				System.out.println("new best price = " + match.getCurrentValues().get("Price"));
 				currentPrice = match.getCurrentValues().get("Price");
 				template.getMaxValues().put("Price", currentPrice);
 				bestTpl = match.getUid();
-			}
+			}*/
 			if (start.getTime() + TIMEOUT < (new Date()).getTime()) {
 				System.out.println("Customer time out");
 				break;

@@ -32,13 +32,13 @@ public class RevEnglishProvider extends Agent {
 				System.out.println("timed out");
 				break;
 			}
-			if (template.getCurrentValues().get("Price") > template.getMinValues().get("Price")) {
+		/*	if (template.getCurrentValues().get("Price") > template.getMinValues().get("Price")) {
 				template.getCurrentValues().put("Price", (int) Math.max(template.getMinValues().get("Price"), template.getCurrentValues().get("Price") * 0.9));
 				bean.updateTemplate(template);
 			}
 			else {
-				System.out.println(template.getProviderId() + " reached min price = " + template.getCurrentValues().get("Price"));
-			}
+			//	System.out.println(template.getProviderId() + " reached min price = " + template.getCurrentValues().get("Price"));
+			}*/
 		}
 
 		System.out.println(template.getProviderId() + " - DONE!");

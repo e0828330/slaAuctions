@@ -1,5 +1,8 @@
 package slaAuctions.providerBeans;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.apache.commons.beanutils.PropertyUtils;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.context.GigaSpaceContext;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,16 +20,30 @@ public class RevEnglishProviderBean {
 
 	public void waitForCustomerTemplate(Template tpl) {
 		String queryString = "";
-		for (String key : tpl.getCurrentValues().keySet()) {
-			if (key.equals("Price")) {
-				continue;
+
+		int i = 0;
+		for (i = 0; i < 9; i++) {
+			Integer current;
+			try {
+				current = (Integer) PropertyUtils.getSimpleProperty(tpl, "property" + i + "_current");
+				if (current != null) {
+					if (!queryString.isEmpty()) {
+						queryString += " AND ";
+					}
+					queryString += " property" + i + "_min <= " + current + " AND ";
+					queryString += "property" + i + "_max <= " + current;
+				}
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
 			}
-			if (!queryString.isEmpty()) {
-				queryString += " AND ";
-			}
-			queryString += "minValues." + key + " <= " + tpl.getCurrentValues().get(key) +
-						   " AND maxValues." + key + " >= " + tpl.getCurrentValues().get(key);
+			
 		}
+		System.out.println(queryString);
+		
 		space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}
 	
@@ -37,7 +54,7 @@ public class RevEnglishProviderBean {
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void updateTemplate(Template template) {
 		space.take(new SQLQuery<Template>(Template.class, "providerId = ?", template.getProviderId()), Integer.MAX_VALUE);
-		space.write(template);
+		space.write(template, Integer.MAX_VALUE);
 	}
 
 	public boolean waitForMatch(Integer providerId, Integer timeout) {

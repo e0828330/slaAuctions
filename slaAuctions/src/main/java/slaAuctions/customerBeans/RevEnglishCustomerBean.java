@@ -22,13 +22,15 @@ public class RevEnglishCustomerBean {
 	
 	public Template waitForMatch(Template tpl) {
 		String queryString = "";
-		for (String key : tpl.getMinValues().keySet()) {
+		/*for (String key : tpl.getMinValues().keySet()) {
 			if (!queryString.isEmpty()) {
 				queryString += " AND ";
 			}
 			queryString += "currentValues." + key + " BETWEEN " +  tpl.getMinValues().get(key) + " AND " + tpl.getMaxValues().get(key);
 		}
-
+		
+		queryString = "property0 BETWEEN 5 AND 10";*/
+		
 		return space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}
 	
