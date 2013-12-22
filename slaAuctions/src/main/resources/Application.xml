@@ -23,6 +23,7 @@
 	<os-core:giga-space id="space" space="auctionSpace" tx-manager="transactionManager" />
 	
 	<!-- Beans -->
+	<bean id="revEnglishCustomerBean" class="slaAuctions.customerBeans.RevEnglishCustomerBean" />
 	<bean id="testBean" class="slaAuctions.customerBeans.TestBean" />
 	<bean id="serverBean" class="slaAuctions.customerBeans.ServerBean" />
 
