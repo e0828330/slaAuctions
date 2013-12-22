@@ -1,5 +1,6 @@
 package slaAuctions.entities;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
@@ -8,14 +9,23 @@ import com.gigaspaces.annotation.pojo.SpaceId;
 
 @SpaceClass
 public class Template {
-	public Template() { }
-
 	private String uid;
 
 	/* Maps for the properties, have min, max and current values */
 	private Map<String, Integer> minValues;
 	private Map<String, Integer> maxValues;
 	private Map<String, Integer> currentValues;
+	
+	/* Default constructor is required */
+	public Template() { }
+	
+	
+	public Template(Map<String, Integer> minValues, Map<String, Integer> currentValues, Map<String, Integer> maxValues) {
+		this.minValues = new HashMap<String, Integer>(minValues);
+		this.currentValues = new HashMap<String, Integer>(currentValues);
+		this.maxValues = new HashMap<String, Integer>(maxValues);
+	}
+	
 	
 	public String getUid() {
 		return uid;
