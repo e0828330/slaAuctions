@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import slaAuctions.agents.RevEnglishCustomer;
 import slaAuctions.agents.RevEnglishProvider;
 import slaAuctions.entities.Template;
+import slaAuctions.providerBeans.ServerBean;
 import slaAuctions.utils.DataGridConnectionUtility;
 
 public class Main {
@@ -21,10 +22,10 @@ public class Main {
 		/* Create app context */
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("file:src/main/resources/Application.xml");
 		
-		/*ServerBean bean = (ServerBean) context.getBean("serverBean");
+		ServerBean bean = (ServerBean) context.getBean("serverBean");
 
-		bean.write();
-		bean.doNotify();*/
+		/* Wait for match notifications */
+		bean.doNotify();
 		
 		ExecutorService executor = Executors.newCachedThreadPool();
 		
