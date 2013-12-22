@@ -24,7 +24,10 @@
 	
 	<!-- Beans -->
 	<bean id="revEnglishCustomerBean" class="slaAuctions.customerBeans.RevEnglishCustomerBean" />
+	<bean id="revEnglishProviderBean" class="slaAuctions.providerBeans.RevEnglishProviderBean" />
+	
+	
 	<bean id="testBean" class="slaAuctions.customerBeans.TestBean" />
-	<bean id="serverBean" class="slaAuctions.customerBeans.ServerBean" />
+	<bean id="serverBean" class="slaAuctions.providerBeans.ServerBean" />
 
 </beans>

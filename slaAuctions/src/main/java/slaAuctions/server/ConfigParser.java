@@ -99,6 +99,7 @@ public class ConfigParser {
 			}
 
 			Template tpl = new Template(minValues, currentValues, maxValues);
+			tpl.setProviderId(id - 1);
 			provider.get("english").add(tpl);
 			System.out.println("----");
 		}

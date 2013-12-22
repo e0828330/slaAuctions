@@ -28,7 +28,7 @@ public class RevEnglishCustomerBean {
 			queryString += "currentValues." + key + " BETWEEN " +  tpl.getMinValues().get(key) + " AND " + tpl.getMaxValues().get(key);
 		}
 		System.out.println(queryString);
-		return space.take(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
+		return space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
