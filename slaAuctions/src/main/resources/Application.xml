@@ -27,7 +27,6 @@
 	<bean id="revEnglishProviderBean" class="slaAuctions.providerBeans.RevEnglishProviderBean" />
 	
 	
-	<bean id="testBean" class="slaAuctions.customerBeans.TestBean" />
 	<bean id="serverBean" class="slaAuctions.providerBeans.ServerBean" />
 
 </beans>
