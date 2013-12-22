@@ -20,7 +20,7 @@ public class RevEnglishProvider extends Agent {
 		
 		Date start = new Date();
 		bean.waitForCustomerTemplate(template);
-		System.out.println(template.getProviderId() + " FOUND CUSTOMER");
+		System.out.println("Provider nr. " + template.getProviderId() + " FOUND CUSTOMER");
 		bean.writeTemplate(template);
 
 		while(true) {
@@ -29,19 +29,13 @@ public class RevEnglishProvider extends Agent {
 				break;
 			}
 			if (start.getTime() + TIMEOUT < (new Date()).getTime()) {
-				System.out.println("timed out");
 				break;
 			}
-		/*	if (template.getCurrentValues().get("Price") > template.getMinValues().get("Price")) {
-				template.getCurrentValues().put("Price", (int) Math.max(template.getMinValues().get("Price"), template.getCurrentValues().get("Price") * 0.9));
+			if (template.getPrice() > template.getPrice_min()) {
+				template.setPrice((int) Math.max(template.getPrice_min(), template.getPrice() * 0.9));
 				bean.updateTemplate(template);
 			}
-			else {
-			//	System.out.println(template.getProviderId() + " reached min price = " + template.getCurrentValues().get("Price"));
-			}*/
 		}
-
-		System.out.println(template.getProviderId() + " - DONE!");
 	}
 
 }

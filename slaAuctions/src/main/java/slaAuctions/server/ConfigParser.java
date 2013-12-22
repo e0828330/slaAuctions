@@ -56,6 +56,8 @@ public class ConfigParser {
 			maxProperies++;
 		}
 		
+		properties.add("Price");
+		
 		// TODO: Validate must at least have > 3 properties and a price
 		parseEnglishProviders();
 		parseEnglishCustomers();
@@ -72,14 +74,14 @@ public class ConfigParser {
 				if (key.equals("Price")) {
 					PropertyUtils.setSimpleProperty(tpl, "price_min", minValues.get("Price"));
 					PropertyUtils.setSimpleProperty(tpl, "price", currentValues.get("Price"));
-					PropertyUtils.setSimpleProperty(tpl, "price_max", minValues.get("Price"));
+					PropertyUtils.setSimpleProperty(tpl, "price_max", maxValues.get("Price"));
 				}
 				else {
 					PropertyUtils.setSimpleProperty(tpl, "property" + i + "_min", minValues.get(key));
 					PropertyUtils.setSimpleProperty(tpl, "property" + i + "_current", currentValues.get(key));
-					PropertyUtils.setSimpleProperty(tpl, "property" + i + "_max", minValues.get(key));
+					PropertyUtils.setSimpleProperty(tpl, "property" + i + "_max", maxValues.get(key));
+					i++;
 				}
-				i++;
 			}
 			
 		} catch (IllegalAccessException e) {
@@ -156,11 +158,17 @@ public class ConfigParser {
 					list.add(nd.sample());
 					list.add(nd.sample());
 					Collections.sort(list);
-					minValues.put(key, list.get(0).intValue());
+					if (key.equals("Price")) {
+						minValues.put(key, 0);
+					}
+					else {
+						minValues.put(key, list.get(0).intValue());
+					}
 					maxValues.put(key, list.get(1).intValue());
 	
-					System.out.println(key + " - min = " + list.get(0).intValue());
-					System.out.println(key + " - max = " + list.get(1).intValue());
+					System.out.println(key + " - min = " + minValues.get(key));
+					System.out.println(key + " - max = " + maxValues.get(key));
+					
 				}
 				
 				if (!key.equals("Price")) {

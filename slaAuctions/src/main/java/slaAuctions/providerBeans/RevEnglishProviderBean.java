@@ -42,7 +42,6 @@ public class RevEnglishProviderBean {
 			}
 			
 		}
-		System.out.println(queryString);
 		
 		space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}

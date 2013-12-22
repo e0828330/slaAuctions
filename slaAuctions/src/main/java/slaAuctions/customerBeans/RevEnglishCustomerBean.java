@@ -1,5 +1,8 @@
 package slaAuctions.customerBeans;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.apache.commons.beanutils.PropertyUtils;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.context.GigaSpaceContext;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,15 +25,32 @@ public class RevEnglishCustomerBean {
 	
 	public Template waitForMatch(Template tpl) {
 		String queryString = "";
-		/*for (String key : tpl.getMinValues().keySet()) {
-			if (!queryString.isEmpty()) {
-				queryString += " AND ";
+		
+		int i = 0;
+		for (i = 0; i < 9; i++) {
+			Integer min;
+			Integer max;
+			try {
+				min = (Integer) PropertyUtils.getSimpleProperty(tpl, "property" + i + "_min");
+				max = (Integer) PropertyUtils.getSimpleProperty(tpl, "property" + i + "_max");
+				if (min != null && max != null) {
+					if (!queryString.isEmpty()) {
+						queryString += " AND ";
+					}
+					queryString += " property" + i + "_current BETWEEN " + min + " AND " + max;
+				}
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
 			}
-			queryString += "currentValues." + key + " BETWEEN " +  tpl.getMinValues().get(key) + " AND " + tpl.getMaxValues().get(key);
+			
 		}
 		
-		queryString = "property0 BETWEEN 5 AND 10";*/
-		
+		queryString += " AND price <= " + tpl.getPrice_max();
+
 		return space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}
 	
@@ -41,6 +61,5 @@ public class RevEnglishCustomerBean {
 			throw new TransactionAbortedException("Template no longer in the space!");
 		}
 		space.write(new Match(tpl.getProviderId()));
-		System.out.println("MATCH for " + tpl.getProviderId());
 	}
 }
