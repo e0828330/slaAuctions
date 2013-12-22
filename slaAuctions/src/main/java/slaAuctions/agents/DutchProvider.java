@@ -29,7 +29,14 @@ public class DutchProvider extends Agent {
 			}
 			if (template.getPrice() > template.getPrice_min()) {
 				template.setPrice((int) Math.max(template.getPrice_min(), template.getPrice() * 0.9));
-				bean.updateTemplate(template);
+				try {
+					bean.updateTemplate(template);
+				}
+				catch (Exception e) {
+					// Template gone so match?
+					bean.waitForMatch(template.getProviderId(), 5000);
+					break;
+				}
 			}
 		}
 		

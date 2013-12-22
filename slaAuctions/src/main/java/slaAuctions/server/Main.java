@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import slaAuctions.agents.DutchCustomer;
+import slaAuctions.agents.DutchProvider;
 import slaAuctions.agents.RevEnglishCustomer;
 import slaAuctions.agents.RevEnglishProvider;
 import slaAuctions.entities.Template;
@@ -36,6 +38,15 @@ public class Main {
 		}
 		for (Template t : parser.getProvider().get("english")) {
 			RevEnglishProvider p = new RevEnglishProvider(context, t);
+			executor.execute(p);
+		}
+		
+		for (Template t : parser.getCustomer().get("dutch")) {
+			DutchCustomer c = new DutchCustomer(context, t);
+			executor.execute(c);
+		}
+		for (Template t : parser.getProvider().get("dutch")) {
+			DutchProvider p = new DutchProvider(context, t);
 			executor.execute(p);
 		}
 		

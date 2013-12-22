@@ -20,7 +20,6 @@ public class RevEnglishProvider extends Agent {
 		
 		Date start = new Date();
 		bean.waitForCustomerTemplate(template);
-		System.out.println("Provider nr. " + template.getProviderId() + " FOUND CUSTOMER");
 		bean.writeTemplate(template);
 
 		while(true) {

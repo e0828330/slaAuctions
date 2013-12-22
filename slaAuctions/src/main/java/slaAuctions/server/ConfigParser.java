@@ -46,6 +46,8 @@ public class ConfigParser {
 		ini = new Ini(new File("src/main/resources/test.ini"));
 		provider.put("english", new ArrayList<Template>());
 		customer.put("english", new ArrayList<Template>());
+		provider.put("dutch", new ArrayList<Template>());
+		customer.put("dutch", new ArrayList<Template>());
 
 		maxProperies = 0;
 		for (String key : ini.keySet()) {
@@ -59,8 +61,10 @@ public class ConfigParser {
 		properties.add("Price");
 		
 		// TODO: Validate must at least have > 3 properties and a price
-		parseEnglishProviders();
-		parseEnglishCustomers();
+		parseSimpleCustomers("dutch");
+		parseSimpleProviders("dutch");
+		parseSimpleCustomers("english");
+		parseSimpleProviders("english");
 	}
 	
 	private Template createTemplate(Integer providerId) {
@@ -95,9 +99,9 @@ public class ConfigParser {
 		return tpl;
 	}
 
-	private void parseEnglishProviders() {
-		for (int i = 0; i < Integer.parseInt(ini.get("Provider", "english")); i++) {
-			System.out.println("Provider nr." + (id++) + " - type english");
+	private void parseSimpleProviders(String type) {
+		for (int i = 0; i < Integer.parseInt(ini.get("Provider", type)); i++) {
+			System.out.println("Provider nr." + (id++) + " - type " + type);
 
 			minValues.clear();
 			maxValues.clear();
@@ -132,14 +136,14 @@ public class ConfigParser {
 				}
 			}
 
-			provider.get("english").add(createTemplate(id - 1));
+			provider.get(type).add(createTemplate(id - 1));
 			System.out.println("----");
 		}
 	}
 	
-	private void parseEnglishCustomers() {
-		for (int i = 0; i < Integer.parseInt(ini.get("Customer", "english")); i++) {
-			System.out.println("Customer nr." + (id++) + " - type english");
+	private void parseSimpleCustomers(String type) {
+		for (int i = 0; i < Integer.parseInt(ini.get("Customer", type)); i++) {
+			System.out.println("Customer nr." + (id++) + " - type " + type);
 
 			minValues.clear();
 			maxValues.clear();
@@ -176,7 +180,7 @@ public class ConfigParser {
 				}
 			}
 
-			customer.get("english").add(createTemplate(null));
+			customer.get(type).add(createTemplate(null));
 			System.out.println("----");
 		}
 	}

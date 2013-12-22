@@ -18,7 +18,7 @@ public class DutchCustomer extends Agent {
 		try {
 			bean.writeMatch(match.getUid());
 		} catch (TransactionAbortedException e) {
-			e.printStackTrace();
+			System.out.println("Customer was to late :/");
 		}
 	}
 
