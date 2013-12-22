@@ -26,6 +26,7 @@
 	<bean id="revEnglishCustomerBean" class="slaAuctions.customerBeans.RevEnglishCustomerBean" />
 	<bean id="revEnglishProviderBean" class="slaAuctions.providerBeans.RevEnglishProviderBean" />
 	
+	<bean id="dutchCustomerBean" class="slaAuctions.customerBeans.DutchCustomerBean" />
 	
 	<bean id="serverBean" class="slaAuctions.providerBeans.ServerBean" />
 
