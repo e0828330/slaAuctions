@@ -5,6 +5,7 @@ import org.openspaces.core.context.GigaSpaceContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import slaAuctions.entities.Match;
 import slaAuctions.entities.Template;
 
 import com.j_spaces.core.client.SQLQuery;
@@ -17,11 +18,14 @@ public class RevEnglishProviderBean {
 	public void waitForCustomerTemplate(Template tpl) {
 		String queryString = "";
 		for (String key : tpl.getCurrentValues().keySet()) {
+			if (key.equals("Price")) {
+				continue;
+			}
 			if (!queryString.isEmpty()) {
 				queryString += " AND ";
 			}
-			queryString += "minValues." + key + " >= " + tpl.getCurrentValues().get(key) +
-						   " AND maxValues." + key + " <= " + tpl.getCurrentValues().get(key);
+			queryString += "minValues." + key + " <= " + tpl.getCurrentValues().get(key) +
+						   " AND maxValues." + key + " >= " + tpl.getCurrentValues().get(key);
 		}
 		System.out.println(queryString);
 		space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
@@ -38,7 +42,7 @@ public class RevEnglishProviderBean {
 	}
 
 	public boolean waitForMatch(Integer providerId, Integer timeout) {
-		Template result = space.take(new SQLQuery<Template>(Template.class, "providerId = ?", providerId), timeout);
+		Match result = space.take(new SQLQuery<Match>(Match.class, "providerId = ?", providerId), timeout);
 		return result != null;
 	}
 	

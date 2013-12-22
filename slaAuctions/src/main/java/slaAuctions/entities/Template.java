@@ -26,13 +26,12 @@ public class Template {
 		this.currentValues = new HashMap<String, Integer>(currentValues);
 		this.maxValues = new HashMap<String, Integer>(maxValues);
 	}
-	
-	
+
+	@SpaceId (autoGenerate=true)
 	public String getUid() {
 		return uid;
 	}
 
-	@SpaceId (autoGenerate=true)
 	public void setUid(String uid) {
 		this.uid = uid;
 	}

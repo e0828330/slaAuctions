@@ -27,13 +27,13 @@ public class RevEnglishCustomerBean {
 			}
 			queryString += "currentValues." + key + " BETWEEN " +  tpl.getMinValues().get(key) + " AND " + tpl.getMaxValues().get(key);
 		}
-		System.out.println(queryString);
+
 		return space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void writeMatch(String tplId) {
-		Template tpl = space.takeById(Template.class, tplId, Integer.MAX_VALUE);
+		Template tpl = space.takeById(Template.class, tplId);
 		space.write(new Match(tpl.getProviderId()));
 		System.out.println("MATCH for " + tpl.getProviderId());
 	}
