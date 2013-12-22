@@ -27,16 +27,13 @@ public class RevEnglishCustomer extends Agent {
 		
 		while(true) {
 			Template match = bean.waitForMatch(template);
-			System.out.println("Found template from " + match.getProviderId());
-			System.out.println("Price is " + match.getCurrentValues().get("Price"));
 			if (match.getCurrentValues().get("Price") < currentPrice) {
 				currentPrice = match.getCurrentValues().get("Price");
 				template.getMaxValues().put("Price", currentPrice);
 				bestTpl = match.getUid();
-				System.out.println("best is "+ bestTpl + " price = " + currentPrice);
 			}
 			if (start.getTime() + TIMEOUT < (new Date()).getTime()) {
-				System.out.println("customer time out");
+				System.out.println("Customer time out");
 				break;
 			}
 		}

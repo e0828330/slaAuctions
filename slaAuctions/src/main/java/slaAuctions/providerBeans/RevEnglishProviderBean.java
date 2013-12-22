@@ -27,7 +27,6 @@ public class RevEnglishProviderBean {
 			queryString += "minValues." + key + " <= " + tpl.getCurrentValues().get(key) +
 						   " AND maxValues." + key + " >= " + tpl.getCurrentValues().get(key);
 		}
-		System.out.println(queryString);
 		space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}
 	
