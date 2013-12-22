@@ -39,7 +39,7 @@ public class ServerBean {
 				EntryArrivedRemoteEvent arrivedRemoteEvent = (EntryArrivedRemoteEvent) event;
 				try {
 					Match match = (Match) arrivedRemoteEvent.getObject();
-					System.out.println("Provider match for  " + match.getProviderId());
+					System.out.println("Got match for provider #" + match.getProviderId());
 					matches.incrementAndGet();
 				} catch (UnusableEntryException e) {
 					e.printStackTrace();

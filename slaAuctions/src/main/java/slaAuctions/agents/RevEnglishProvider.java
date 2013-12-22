@@ -25,7 +25,6 @@ public class RevEnglishProvider extends Agent {
 
 		while(true) {
 			if (bean.waitForMatch(template.getProviderId(), 5000)) {
-				System.out.println(template.getProviderId() + " - SOLD!");
 				break;
 			}
 			if (start.getTime() + TIMEOUT < (new Date()).getTime()) {
