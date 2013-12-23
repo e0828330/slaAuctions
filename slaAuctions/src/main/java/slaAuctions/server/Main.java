@@ -12,13 +12,10 @@ import slaAuctions.agents.RevEnglishCustomer;
 import slaAuctions.agents.RevEnglishProvider;
 import slaAuctions.entities.Template;
 import slaAuctions.providerBeans.ServerBean;
-import slaAuctions.utils.DataGridConnectionUtility;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		/* Create the space if it does not exist */
-		DataGridConnectionUtility.getSpace("auctionSpace");
 		/* Create app context */
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("file:src/main/resources/Application.xml");
 		
@@ -50,8 +47,12 @@ public class Main {
 			executor.execute(p);
 		}
 		
-		executor.awaitTermination(2, TimeUnit.MINUTES);
+		Thread.sleep(1000 * 60 * 2);
+		executor.shutdown();
+		System.out.println("WAITING FOR SHUTDOWN");
+		executor.awaitTermination(1, TimeUnit.MINUTES);
 		System.out.println("Total matches: " + bean.getMatches());
+		context.destroy();
 		System.exit(0);
 	}
 

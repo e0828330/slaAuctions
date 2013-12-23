@@ -49,7 +49,7 @@ public class RevEnglishCustomerBean {
 			
 		}
 		
-		queryString += " AND price <= " + tpl.getPrice_max();
+		queryString += " AND price < " + tpl.getPrice_max();
 
 		return space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}

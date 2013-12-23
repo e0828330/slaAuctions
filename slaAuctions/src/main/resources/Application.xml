@@ -16,7 +16,7 @@
 	
 	<os-core:giga-space-context />
 	
-	<os-core:space id="auctionSpace" url="jini://*/*/auctionSpace" />
+	<os-core:space id="auctionSpace" url="/./auctionSpace" />
 
 	<os-core:local-tx-manager id="transactionManager" space="auctionSpace" default-timeout="3600" />
 
