@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		/* Create app context */
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("file:src/main/resources/Application.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/Application.xml");
 		
 		ServerBean bean = (ServerBean) context.getBean("serverBean");
 

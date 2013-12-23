@@ -23,7 +23,7 @@ public class RevEnglishCustomerBean {
 		space.write(tpl);
 	}
 	
-	public Template waitForMatch(Template tpl) {
+	public Template waitForMatch(Template tpl, int timeout) {
 		String queryString = "";
 		
 		int i = 0;
@@ -51,7 +51,7 @@ public class RevEnglishCustomerBean {
 		
 		queryString += " AND price < " + tpl.getPrice_max();
 
-		return space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
+		return space.read(new SQLQuery<Template>(Template.class, queryString), timeout);
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
