@@ -48,6 +48,8 @@ public class ConfigParser {
 		customer.put("english", new ArrayList<Template>());
 		provider.put("dutch", new ArrayList<Template>());
 		customer.put("dutch", new ArrayList<Template>());
+		provider.put("double", new ArrayList<Template>());
+		customer.put("double", new ArrayList<Template>());
 
 		maxProperies = 0;
 		for (String key : ini.keySet()) {
@@ -65,6 +67,8 @@ public class ConfigParser {
 		parseSimpleProviders("dutch");
 		parseSimpleCustomers("english");
 		parseSimpleProviders("english");
+		parseSimpleCustomers("double");
+		parseSimpleProviders("double");
 	}
 	
 	private Template createTemplate(Integer providerId) {
