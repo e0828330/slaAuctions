@@ -58,10 +58,10 @@ public class Main {
 			DoubleCustomer c = new DoubleCustomer(context, t);
 			executor.execute(c);
 		}
-		/*for (Template t : parser.getProvider().get("double")) {
+		for (Template t : parser.getProvider().get("double")) {
 			DoubleProvider p = new DoubleProvider(context, t);
 			executor.execute(p);
-		}*/
+		}
 		
 		Thread.sleep(1000 * 60 * 2);
 		executor.shutdown();

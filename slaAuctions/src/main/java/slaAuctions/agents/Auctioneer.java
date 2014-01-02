@@ -18,8 +18,13 @@ public class Auctioneer extends Agent {
 	
 	public void run() {
 		while (true) {
-			DoubleAuctionTemplate template =  bean.receive();
-			System.out.println("Received template : " + template.getCustomerId());
+			DoubleAuctionTemplate template = bean.receive();
+			if (template.getCustomerId() != null) {
+				System.out.println("Received customer template : " + template.getCustomerId());
+			}
+			else if (template.getProviderId() != null) {
+				System.out.println("Received provider template : " + template.getProviderId());
+			}
 		}
 	}
 
