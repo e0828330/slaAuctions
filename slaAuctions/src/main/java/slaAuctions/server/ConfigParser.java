@@ -15,6 +15,7 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 import slaAuctions.entities.Template;
+import slaAuctions.providerBeans.AuctioneerBean;
 
 public class ConfigParser {
 

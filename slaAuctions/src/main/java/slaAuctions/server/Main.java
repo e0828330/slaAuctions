@@ -50,16 +50,16 @@ public class Main {
 			executor.execute(p);
 		}*/
 		
-		AuctioneerBean auctioneer = (AuctioneerBean) context.getBean("auctioneerBean");
-		auctioneer.makePrice();
+		/*AuctioneerBean auctioneer = (AuctioneerBean) context.getBean("auctioneerBean");
+		auctioneer.makePrice();*/
 		for (Template t : parser.getCustomer().get("double")) {
 			DoubleCustomer c = new DoubleCustomer(context, t);
 			executor.execute(c);
 		}
-		for (Template t : parser.getProvider().get("double")) {
+		/*for (Template t : parser.getProvider().get("double")) {
 			DoubleProvider p = new DoubleProvider(context, t);
 			executor.execute(p);
-		}
+		}*/
 		
 		Thread.sleep(1000 * 60 * 2);
 		executor.shutdown();
