@@ -49,6 +49,7 @@
                      <goal>shade</goal>
                   </goals>
                   <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
                      <filters>
                         <filter>
                            <artifact>*:*</artifact>
@@ -77,7 +78,7 @@
       </plugins>
       <resources>
          <resource>
-            <directory>src/resources</directory>
+            <directory>src/main/resources</directory>
             <includes>
                <include>*</include>
             </includes>
