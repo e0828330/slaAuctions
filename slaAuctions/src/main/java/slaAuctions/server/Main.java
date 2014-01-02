@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import slaAuctions.agents.Auctioneer;
 import slaAuctions.agents.DoubleCustomer;
 import slaAuctions.agents.DoubleProvider;
 import slaAuctions.agents.DutchCustomer;
@@ -50,8 +51,9 @@ public class Main {
 			executor.execute(p);
 		}*/
 		
-		/*AuctioneerBean auctioneer = (AuctioneerBean) context.getBean("auctioneerBean");
-		auctioneer.makePrice();*/
+		Auctioneer auctioneer = new Auctioneer(context, null);
+		executor.execute(auctioneer);
+
 		for (Template t : parser.getCustomer().get("double")) {
 			DoubleCustomer c = new DoubleCustomer(context, t);
 			executor.execute(c);

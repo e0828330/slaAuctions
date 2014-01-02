@@ -9,6 +9,8 @@ public class Template {
 
 	private Integer providerId;
 	
+	private Integer customerId;
+	
 	/* Default constructor is required */
 	public Template() { }
 	
@@ -310,6 +312,13 @@ public class Template {
 		this.providerId = providerId;
 	}
 
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
 
 
 }

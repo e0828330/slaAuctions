@@ -72,9 +72,10 @@ public class ConfigParser {
 		parseSimpleProviders("double");
 	}
 	
-	private Template createTemplate(Integer providerId) {
+	private Template createTemplate(Integer providerId, Integer customerId) {
 		Template tpl = new Template();
 		tpl.setProviderId(providerId);
+		tpl.setCustomerId(customerId);
 		
 		int i = 0;
 		
@@ -141,7 +142,7 @@ public class ConfigParser {
 				}
 			}
 
-			provider.get(type).add(createTemplate(id - 1));
+			provider.get(type).add(createTemplate(id - 1, null));
 			System.out.println("----");
 		}
 	}
@@ -185,7 +186,7 @@ public class ConfigParser {
 				}
 			}
 
-			customer.get(type).add(createTemplate(null));
+			customer.get(type).add(createTemplate(null, id - 1));
 			System.out.println("----");
 		}
 	}

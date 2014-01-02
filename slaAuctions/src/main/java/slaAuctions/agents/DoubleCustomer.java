@@ -16,10 +16,11 @@ public class DoubleCustomer extends Agent {
 	}
 
 	public void run() {
-		System.out.println("Doublecustomer");
+		System.out.println("Doublecustomer started");
 		DoubleCustomerBean bean = (DoubleCustomerBean) context.getBean("doubleCustomerBean");
-		this.logger.info("Write template into space auctioneer-space");
-		//bean.writeAuctioneerTemplate((DoubleAuctionTemplate) template);
+		System.out.println("Write template into space auctioneer-space: uid =  " + template.getCustomerId());
+		bean.writeAuctioneerTemplate(new DoubleAuctionTemplate(template));
+		System.out.println("READY");
 	}
 
 }

@@ -31,7 +31,7 @@
 	
 	<bean id="doubleCustomerBean" class="slaAuctions.customerBeans.DoubleCustomerBean" />
 	<bean id="doubleProviderBean" class="slaAuctions.providerBeans.DoubleProviderBean" />
-	
+
 	
 	<bean id="serverBean" class="slaAuctions.providerBeans.ServerBean" />
 	<bean id="auctioneerBean" class="slaAuctions.providerBeans.AuctioneerBean" />
