@@ -67,21 +67,39 @@ public class AuctioneerBean {
 			this.groups.put(new Integer(groupNumber++), templates);
 		}
 		
-		System.out.println("Created " + this.groups.size() + " groups;");
+		System.out.println("Created " + this.groups.size() + " groups.");
 		for (Entry<Integer, ArrayList<DoubleAuctionTemplate>> entry : this.groups.entrySet()) {
-			System.out.println("Group Nr.: " + entry.getKey());
-			for (DoubleAuctionTemplate a : entry.getValue()) {
-				if (a.getCustomerId() != null) {
-					System.out.println("Template of customer: " + a.getCustomerId());
-				}
-				else {
-					System.out.println("Template of provider: " + a.getProviderId());
-				}
+			
+			
+			int price = this.calculatePrice(entry.getValue());
+			
+			System.out.println("Group Nr.: " + entry.getKey() +" gets price: " + price);
+			
+			for (DoubleAuctionTemplate t : entry.getValue()) {
+				t.setPrice(new Integer(price));
 			}
 		}
 		
 	}
 	
+	// Average price
+	private int calculatePrice(ArrayList<DoubleAuctionTemplate> templates) {
+		int price = 0;
+		for (DoubleAuctionTemplate template : templates) {
+			if (template.getCustomerId() != null) {
+				if (template.getPrice_max() != null) {
+					price += template.getPrice_max();
+				}
+			}
+			else {
+				if (template.getPrice_max() != null && template.getPrice_min() != null) {
+					price += Math.round((template.getPrice_max() + template.getPrice_min()) / 2);
+				}
+			}
+		}
+		return Math.round(price / templates.size());
+	}
+
 	public DoubleAuctionTemplate[] receiveSameTemplates(Template tpl) {
 		String queryString = "";
 		
