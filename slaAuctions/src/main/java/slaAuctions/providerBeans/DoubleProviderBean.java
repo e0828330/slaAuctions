@@ -19,7 +19,7 @@ public class DoubleProviderBean {
 	}
 
 	public PriceTemplate waitForTemplate(Integer providerId) {
-		String queryString = "customerId = " + providerId;
+		String queryString = "providerId = " + providerId;
 		return space.take(new SQLQuery<PriceTemplate>(PriceTemplate.class, queryString), Integer.MAX_VALUE);
 	}
 
