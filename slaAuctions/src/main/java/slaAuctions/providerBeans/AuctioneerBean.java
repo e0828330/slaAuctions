@@ -24,92 +24,15 @@ public class AuctioneerBean {
 	@GigaSpaceContext
 	private GigaSpace space;
 	
-	private int TIMEOUT = 60 * 2 * 1000; // 1 minute hardcoded for now
-	
-	private ConcurrentHashMap<Integer, ArrayList<DoubleAuctionTemplate>> groups;
-	
-	private int groupNumber = 0;
-	
 	Logger logger = Logger.getLogger(getClass());
 	
-	public void receive() {
-		groups = new ConcurrentHashMap<Integer, ArrayList<DoubleAuctionTemplate>>();
-		
+	public int getTotalNumber() {
 		int totalTemplateNumber = space.count(new DoubleAuctionTemplate());
-		
-		System.out.println(totalTemplateNumber + " of DoubleAuctionTemplates are in the space.");
-		
-		Date start = new Date();
-		
-		while (totalTemplateNumber > 0) {
-			// If total timeout is reached, leave
-			if (start.getTime() + TIMEOUT < (new Date()).getTime()) {
-				break;
-			}
-			
-			// Take some template
-			DoubleAuctionTemplate match = space.take(new DoubleAuctionTemplate(), Integer.MAX_VALUE);
-			totalTemplateNumber--;
-			
-			// Receive all templates with same properties
-			ArrayList<DoubleAuctionTemplate> templates = new ArrayList<DoubleAuctionTemplate>();
-			templates.add(match);
-		
-			// Query all templates which refer to 'match'
-			DoubleAuctionTemplate[] same = this.receiveSameTemplates(match);
-			for (DoubleAuctionTemplate temp : same) {
-				templates.add(temp);
-			}
-			totalTemplateNumber -= same.length;
-			
-			this.groups.put(new Integer(groupNumber++), templates);
-		}
-		
-		System.out.println("Created " + this.groups.size() + " groups.");
-		for (Entry<Integer, ArrayList<DoubleAuctionTemplate>> entry : this.groups.entrySet()) {
-			
-			
-			int price = this.calculatePrice(entry.getValue());
-			
-			System.out.println("Group Nr.: " + entry.getKey() +" gets price: " + price);
-			
-			// set the new price
-			for (DoubleAuctionTemplate t : entry.getValue()) {
-				t.setPrice(new Integer(price));
-			}
-			
-			
-			for (DoubleAuctionTemplate t : entry.getValue()) {
-				// All the sellers who asked less than p sell
-				if (t.getProviderId() != null && Math.round((t.getPrice_max() + t.getPrice_min()) / 2) <= price) {
-					System.out.println("Write template with fixed price");
-					space.write(new PriceTemplate(t));
-				}
-				// and all buyers who bid more than p buy
-				else if (t.getCustomerId() != null && Math.round((t.getPrice_max() + t.getPrice_min()) / 2) >= price) {
-					System.out.println("Write template with fixed price");
-					space.write(new PriceTemplate(t));	
-				}
-			}
-		}
+		return totalTemplateNumber;
 	}
 	
-	// Average price
-	private int calculatePrice(ArrayList<DoubleAuctionTemplate> templates) {
-		int price = 0;
-		for (DoubleAuctionTemplate template : templates) {
-			if (template.getCustomerId() != null) {
-				if (template.getPrice_max() != null) {
-					price += template.getPrice_max();
-				}
-			}
-			else {
-				if (template.getPrice_max() != null && template.getPrice_min() != null) {
-					price += Math.round((template.getPrice_max() + template.getPrice_min()) / 2);
-				}
-			}
-		}
-		return Math.round(price / templates.size());
+	public DoubleAuctionTemplate getDoubleAucationTemplate() {
+		return space.take(new DoubleAuctionTemplate(), Integer.MAX_VALUE);
 	}
 
 	public DoubleAuctionTemplate[] receiveSameTemplates(Template tpl) {
@@ -145,6 +68,10 @@ public class AuctioneerBean {
 			
 		}
 		return space.takeMultiple(new SQLQuery<DoubleAuctionTemplate>(DoubleAuctionTemplate.class, queryString), Integer.MAX_VALUE);
+	}
+
+	public void writePriceTemplate(PriceTemplate priceTemplate) {
+		space.write(priceTemplate);
 	}	
 	
 }
