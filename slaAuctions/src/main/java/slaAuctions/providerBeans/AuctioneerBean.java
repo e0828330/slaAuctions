@@ -15,8 +15,12 @@ public class AuctioneerBean {
 	
 	Logger logger = Logger.getLogger(getClass());
 	
-	public DoubleAuctionTemplate receive() {
-		return space.take(new DoubleAuctionTemplate(), Integer.MAX_VALUE);
+	public void receive() {
+		int totalNumber = space.count(new DoubleAuctionTemplate());
+		System.out.println(totalNumber + " of DoubleAuctionTemplates are in the space.");
+		
+		
+		//space.take(new DoubleAuctionTemplate(), Integer.MAX_VALUE);
 	}
 	
 }

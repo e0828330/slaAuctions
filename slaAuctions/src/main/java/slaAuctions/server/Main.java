@@ -1,5 +1,6 @@
 package slaAuctions.server;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -51,15 +52,18 @@ public class Main {
 			executor.execute(p);
 		}*/
 		
-		Auctioneer auctioneer = new Auctioneer(context, null);
+		int size = parser.getCustomer().get("double").size() + parser.getProvider().get("double").size();
+		CountDownLatch latch = new CountDownLatch(size);
+		
+		Auctioneer auctioneer = new Auctioneer(context, null, latch);
 		executor.execute(auctioneer);
 
 		for (Template t : parser.getCustomer().get("double")) {
-			DoubleCustomer c = new DoubleCustomer(context, t);
+			DoubleCustomer c = new DoubleCustomer(context, t, latch);
 			executor.execute(c);
 		}
 		for (Template t : parser.getProvider().get("double")) {
-			DoubleProvider p = new DoubleProvider(context, t);
+			DoubleProvider p = new DoubleProvider(context, t, latch);
 			executor.execute(p);
 		}
 		

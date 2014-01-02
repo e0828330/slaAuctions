@@ -1,5 +1,7 @@
 package slaAuctions.agents;
 
+import java.util.concurrent.CountDownLatch;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
@@ -11,14 +13,18 @@ public class DoubleCustomer extends Agent {
 
 	Logger logger = Logger.getLogger(getClass());
 	
-	public DoubleCustomer(ApplicationContext context, Template template) {
+	private CountDownLatch latch;
+	
+	public DoubleCustomer(ApplicationContext context, Template template, CountDownLatch latch) {
 		super(context, template);
+		this.latch = latch;
 	}
 
 	public void run() {
 		DoubleCustomerBean bean = (DoubleCustomerBean) context.getBean("doubleCustomerBean");
 		System.out.println("Write template into space auctioneer-space: uid =  " + template.getCustomerId());
 		bean.writeAuctioneerTemplate(new DoubleAuctionTemplate(template));
+		latch.countDown();
 	}
 
 }
