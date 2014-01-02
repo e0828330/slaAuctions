@@ -3,11 +3,8 @@ package slaAuctions.providerBeans;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
@@ -15,10 +12,11 @@ import org.openspaces.core.GigaSpace;
 import org.openspaces.core.context.GigaSpaceContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.j_spaces.core.client.SQLQuery;
-
 import slaAuctions.entities.DoubleAuctionTemplate;
+import slaAuctions.entities.PriceTemplate;
 import slaAuctions.entities.Template;
+
+import com.j_spaces.core.client.SQLQuery;
 
 @Transactional
 public class AuctioneerBean {
@@ -75,11 +73,25 @@ public class AuctioneerBean {
 			
 			System.out.println("Group Nr.: " + entry.getKey() +" gets price: " + price);
 			
+			// set the new price
 			for (DoubleAuctionTemplate t : entry.getValue()) {
 				t.setPrice(new Integer(price));
 			}
+			
+			
+			for (DoubleAuctionTemplate t : entry.getValue()) {
+				// All the sellers who asked less than p sell
+				if (t.getProviderId() != null && Math.round((t.getPrice_max() + t.getPrice_min()) / 2) <= price) {
+					System.out.println("Write template with fixed price");
+					space.write(new PriceTemplate(t));
+				}
+				// and all buyers who bid more than p buy
+				else if (t.getCustomerId() != null && Math.round((t.getPrice_max() + t.getPrice_min()) / 2) >= price) {
+					System.out.println("Write template with fixed price");
+					space.write(new PriceTemplate(t));	
+				}
+			}
 		}
-		
 	}
 	
 	// Average price

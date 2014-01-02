@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 
 import slaAuctions.customerBeans.DoubleCustomerBean;
 import slaAuctions.entities.DoubleAuctionTemplate;
+import slaAuctions.entities.PriceTemplate;
 import slaAuctions.entities.Template;
 
 public class DoubleCustomer extends Agent {
@@ -25,6 +26,8 @@ public class DoubleCustomer extends Agent {
 		System.out.println("Write template into space auctioneer-space: uid =  " + template.getCustomerId());
 		bean.writeAuctioneerTemplate(new DoubleAuctionTemplate(template));
 		latch.countDown();
+		PriceTemplate priceTemplate = bean.waitForTemplate(template.getCustomerId());
+		System.out.println("Customer: Received price :" + priceTemplate.getPrice());
 	}
 
 }
