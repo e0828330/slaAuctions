@@ -17,7 +17,6 @@
 	<os-core:giga-space-context />
 	
 	<os-core:space id="auctionSpace" url="/./auctionSpace" />
-	<os-core:space id="doubleAuctionSpace" url="/./doubleAuctionSpace" />
 
 	<os-core:local-tx-manager id="transactionManager" space="auctionSpace" default-timeout="3600" />
 
@@ -35,5 +34,6 @@
 	
 	
 	<bean id="serverBean" class="slaAuctions.providerBeans.ServerBean" />
+	<bean id="auctioneerBean" class="slaAuctions.providerBeans.AuctioneerBean" />
 
 </beans>

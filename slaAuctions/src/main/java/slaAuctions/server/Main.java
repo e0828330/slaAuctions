@@ -13,6 +13,7 @@ import slaAuctions.agents.DutchProvider;
 import slaAuctions.agents.RevEnglishCustomer;
 import slaAuctions.agents.RevEnglishProvider;
 import slaAuctions.entities.Template;
+import slaAuctions.providerBeans.AuctioneerBean;
 import slaAuctions.providerBeans.ServerBean;
 
 public class Main {
@@ -48,6 +49,9 @@ public class Main {
 			DutchProvider p = new DutchProvider(context, t);
 			executor.execute(p);
 		}*/
+		
+		AuctioneerBean auctioneer = (AuctioneerBean) context.getBean("auctioneerBean");
+		auctioneer.makePrice();
 		for (Template t : parser.getCustomer().get("double")) {
 			DoubleCustomer c = new DoubleCustomer(context, t);
 			executor.execute(c);

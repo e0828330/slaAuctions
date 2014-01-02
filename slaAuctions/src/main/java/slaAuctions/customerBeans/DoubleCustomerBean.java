@@ -7,6 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DoubleCustomerBean {
 	@GigaSpaceContext
-	private GigaSpace doubleAuctionSpace;
+	private GigaSpace space;
 
 }
