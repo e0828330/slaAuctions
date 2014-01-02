@@ -1,9 +1,13 @@
 package slaAuctions.agents;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.context.ApplicationContext;
+
+import com.j_spaces.core.client.SQLQuery;
 
 import slaAuctions.entities.DoubleAuctionTemplate;
 import slaAuctions.entities.Template;
@@ -57,6 +61,7 @@ public class Auctioneer extends Agent {
 		//calculatePrices();
 		
 	}
+	
 
 	/**
 	 * Calculate fixed prices for same templates
