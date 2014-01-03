@@ -27,11 +27,11 @@ public class DoubleCustomer extends Agent {
 
 	public void run() {
 		DoubleCustomerBean bean = (DoubleCustomerBean) context.getBean("doubleCustomerBean");
-		System.out.println("Write template into space auctioneer-space: uid =  " + template.getCustomerId());
+		//System.out.println("Write template into space auctioneer-space: uid =  " + template.getCustomerId());
 		bean.writeAuctioneerTemplate(new DoubleAuctionTemplate(template));
 		latch.countDown();
 		PriceTemplate priceTemplate = bean.waitForPriceTemplate(template.getCustomerId());
-		System.out.println("Customer: Received price :" + priceTemplate.getPrice());
+		//System.out.println("Customer: Received price :" + priceTemplate.getPrice());
 		
 		Date start = new Date();
 		
