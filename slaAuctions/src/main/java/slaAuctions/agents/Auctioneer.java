@@ -92,11 +92,13 @@ public class Auctioneer extends Agent {
 				if (t.getProviderId() != null && Math.round((t.getPrice_max() + t.getPrice_min()) / 2) <= price) {
 					System.out.println("Write template with fixed price");
 					bean.writePriceTemplate(new PriceTemplate(t));
+					bean.writeTemplate((Template) t);
 				}
 				// and all buyers who bid more than p buy
 				else if (t.getCustomerId() != null && t.getPrice_max() >= price) {
 					System.out.println("Write template with fixed price");
-					bean.writePriceTemplate(new PriceTemplate(t));	
+					bean.writePriceTemplate(new PriceTemplate(t));
+					bean.writeTemplate((Template) t);
 				}
 			}
 		}		

@@ -72,6 +72,10 @@ public class AuctioneerBean {
 
 	public void writePriceTemplate(PriceTemplate priceTemplate) {
 		space.write(priceTemplate);
+	}
+
+	public void writeTemplate(Template t) {
+		space.write(t);
 	}	
 	
 }

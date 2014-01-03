@@ -1,5 +1,6 @@
 package slaAuctions.agents;
 
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 import org.springframework.context.ApplicationContext;
@@ -25,6 +26,16 @@ public class DoubleProvider extends Agent {
 		this.latch.countDown();
 		PriceTemplate priceTemplate = bean.waitForTemplate(template.getProviderId());
 		System.out.println("Provider: Received price :" + priceTemplate.getPrice());
+
+		
+		while(true) {
+			if (bean.waitForMatch(priceTemplate.getProviderId(), Integer.MAX_VALUE) == false) {
+				System.out.println("No match");
+				break;
+			}
+			
+		}		
+		
 	}
 
 }
