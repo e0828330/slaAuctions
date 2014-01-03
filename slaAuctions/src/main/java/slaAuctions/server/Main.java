@@ -15,7 +15,6 @@ import slaAuctions.agents.DutchProvider;
 import slaAuctions.agents.RevEnglishCustomer;
 import slaAuctions.agents.RevEnglishProvider;
 import slaAuctions.entities.Template;
-import slaAuctions.providerBeans.AuctioneerBean;
 import slaAuctions.providerBeans.ServerBean;
 
 public class Main {
