@@ -15,6 +15,7 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 import slaAuctions.entities.Template;
+import slaAuctions.providerBeans.AuctioneerBean;
 
 public class ConfigParser {
 
@@ -48,6 +49,8 @@ public class ConfigParser {
 		customer.put("english", new ArrayList<Template>());
 		provider.put("dutch", new ArrayList<Template>());
 		customer.put("dutch", new ArrayList<Template>());
+		provider.put("double", new ArrayList<Template>());
+		customer.put("double", new ArrayList<Template>());
 
 		maxProperies = 0;
 		for (String key : ini.keySet()) {
@@ -65,11 +68,14 @@ public class ConfigParser {
 		parseSimpleProviders("dutch");
 		parseSimpleCustomers("english");
 		parseSimpleProviders("english");
+		parseSimpleCustomers("double");
+		parseSimpleProviders("double");
 	}
 	
-	private Template createTemplate(Integer providerId) {
+	private Template createTemplate(Integer providerId, Integer customerId) {
 		Template tpl = new Template();
 		tpl.setProviderId(providerId);
+		tpl.setCustomerId(customerId);
 		
 		int i = 0;
 		
@@ -136,7 +142,7 @@ public class ConfigParser {
 				}
 			}
 
-			provider.get(type).add(createTemplate(id - 1));
+			provider.get(type).add(createTemplate(id - 1, null));
 			System.out.println("----");
 		}
 	}
@@ -180,7 +186,7 @@ public class ConfigParser {
 				}
 			}
 
-			customer.get(type).add(createTemplate(null));
+			customer.get(type).add(createTemplate(null, id - 1));
 			System.out.println("----");
 		}
 	}
