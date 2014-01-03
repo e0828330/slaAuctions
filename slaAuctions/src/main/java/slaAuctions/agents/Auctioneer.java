@@ -14,8 +14,6 @@ import slaAuctions.entities.Template;
 import slaAuctions.providerBeans.AuctioneerBean;
 
 public class Auctioneer extends Agent {
-
-	private int ROUNDTIME = 5000;
 	
 	private CountDownLatch latch;
 	
