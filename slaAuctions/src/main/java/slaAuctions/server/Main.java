@@ -34,7 +34,7 @@ public class Main {
 		
 		ConfigParser parser = new ConfigParser();
 		parser.doParse();
-		/*for (Template t : parser.getCustomer().get("english")) {
+		for (Template t : parser.getCustomer().get("english")) {
 			RevEnglishCustomer c = new RevEnglishCustomer(context, t);
 			executor.execute(c);
 		}
@@ -50,7 +50,7 @@ public class Main {
 		for (Template t : parser.getProvider().get("dutch")) {
 			DutchProvider p = new DutchProvider(context, t);
 			executor.execute(p);
-		}*/
+		}
 		
 		int size = parser.getCustomer().get("double").size() + parser.getProvider().get("double").size();
 		CountDownLatch latch = new CountDownLatch(size);

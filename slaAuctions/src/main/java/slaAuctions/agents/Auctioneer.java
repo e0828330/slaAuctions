@@ -73,13 +73,13 @@ public class Auctioneer extends Agent {
 			this.groups.put(new Integer(groupNumber++), templates);
 		}
 		
-		System.out.println("Created " + this.groups.size() + " groups.");
+		//System.out.println("Created " + this.groups.size() + " groups.");
 		for (Entry<Integer, ArrayList<DoubleAuctionTemplate>> entry : this.groups.entrySet()) {
 			
 			
 			int price = this.calculatePrice(entry.getValue());
 			
-			System.out.println("Group Nr.: " + entry.getKey() +" gets price: " + price);
+			//System.out.println("Group Nr.: " + entry.getKey() +" gets price: " + price);
 			
 			// set the new price
 			for (DoubleAuctionTemplate t : entry.getValue()) {
@@ -90,13 +90,13 @@ public class Auctioneer extends Agent {
 			for (DoubleAuctionTemplate t : entry.getValue()) {
 				// All the sellers who asked less than p sell
 				if (t.getProviderId() != null && Math.round((t.getPrice_max() + t.getPrice_min()) / 2) <= price) {
-					System.out.println("Write template with fixed price");
+					//System.out.println("Write template with fixed price");
 					bean.writePriceTemplate(new PriceTemplate(t));
 					bean.writeTemplate((Template) t);
 				}
 				// and all buyers who bid more than p buy
 				else if (t.getCustomerId() != null && t.getPrice_max() >= price) {
-					System.out.println("Write template with fixed price");
+					//System.out.println("Write template with fixed price");
 					bean.writePriceTemplate(new PriceTemplate(t));
 					bean.writeTemplate((Template) t);
 				}
