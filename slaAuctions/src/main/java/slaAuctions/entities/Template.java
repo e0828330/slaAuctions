@@ -7,9 +7,9 @@ import com.gigaspaces.annotation.pojo.SpaceId;
 public class Template {
 	private String uid;
 
-	private Integer providerId;
+	private String providerId;
 	
-	private Integer customerId;
+	private String customerId;
 	
 	/* Default constructor is required */
 	public Template() { }
@@ -303,20 +303,20 @@ public class Template {
 		this.uid = uid;
 	}
 
-	public Integer getProviderId() {
+	public String getProviderId() {
 		return providerId;
 	}
 
 
-	public void setProviderId(Integer providerId) {
+	public void setProviderId(String providerId) {
 		this.providerId = providerId;
 	}
 
-	public Integer getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(Integer customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 

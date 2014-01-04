@@ -12,7 +12,7 @@ public class DutchProvider extends Agent {
 	private int TIMEOUT = 60 * 1 * 1000; // 1 minutes hardcoded for now
 
 	public DutchProvider(ApplicationContext context, Template template) {
-		super(context, template);
+		super(context, template, template.getProviderId());
 	}
 
 	public void run() {

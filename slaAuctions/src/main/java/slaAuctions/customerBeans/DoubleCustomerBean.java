@@ -25,8 +25,8 @@ public class DoubleCustomerBean {
 		space.write(tpl);
 	}
 
-	public PriceTemplate waitForPriceTemplate(Integer customerId) {
-		String queryString = "customerId = " + customerId;
+	public PriceTemplate waitForPriceTemplate(String customerId) {
+		String queryString = "customerId = '" + customerId + "'";
 		return space.take(new SQLQuery<PriceTemplate>(PriceTemplate.class, queryString), Integer.MAX_VALUE);
 	}
 	
@@ -62,12 +62,12 @@ public class DoubleCustomerBean {
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public void writeMatch(String tplId) throws TransactionAbortedException {
+	public void writeMatch(String tplId, String customerId) throws TransactionAbortedException {
 		Template tpl = space.takeById(Template.class, tplId);
 		if (tpl == null) {
 			throw new TransactionAbortedException("Template no longer in the space!");
 		}
-		space.write(new Match(tpl.getProviderId()));
+		space.write(new Match(tpl.getProviderId(), customerId));
 	}	
 
 }

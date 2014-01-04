@@ -19,12 +19,12 @@ public class DoubleProviderBean {
 		space.write(tpl);
 	}
 
-	public PriceTemplate waitForTemplate(Integer providerId) {
-		String queryString = "providerId = " + providerId;
+	public PriceTemplate waitForTemplate(String providerId) {
+		String queryString = "providerId = '" + providerId + "'";
 		return space.take(new SQLQuery<PriceTemplate>(PriceTemplate.class, queryString), Integer.MAX_VALUE);
 	}
 	
-	public boolean waitForMatch(Integer providerId, Integer timeout) {
+	public boolean waitForMatch(String providerId, Integer timeout) {
 		Match result = space.take(new SQLQuery<Match>(Match.class, "providerId = ?", providerId), timeout);
 		return result != null;
 	}	

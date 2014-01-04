@@ -11,7 +11,7 @@ import slaAuctions.exceptions.TransactionAbortedException;
 public class RevEnglishCustomer extends Agent {
 
 	public RevEnglishCustomer(ApplicationContext context, Template template) {
-		super(context, template);
+		super(context, template, template.getCustomerId());
 	}
 	
 	private int TIMEOUT = 60 * 1 * 1000; // 1 minute hard coded for now
@@ -43,7 +43,7 @@ public class RevEnglishCustomer extends Agent {
 		}
 		if (!bestTpl.isEmpty()) {
 			try {
-				bean.writeMatch(bestTpl);
+				bean.writeMatch(bestTpl, id);
 			} catch (TransactionAbortedException e) {
 				System.out.println("Customer was to late :/");
 			}

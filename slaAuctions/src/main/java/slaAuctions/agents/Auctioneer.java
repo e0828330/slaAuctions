@@ -18,7 +18,7 @@ public class Auctioneer extends Agent {
 	private CountDownLatch latch;
 	
 	public Auctioneer(ApplicationContext context, Template template, CountDownLatch latch) {
-		super(context, template);
+		super(context, template, null);
 		this.bean = (AuctioneerBean) context.getBean("auctioneerBean");
 		this.latch = latch;
 	}

@@ -1,6 +1,8 @@
 package slaAuctions.providerBeans;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.jini.core.entry.UnusableEntryException;
@@ -23,7 +25,7 @@ public class ServerBean {
 	@GigaSpaceContext
 	private GigaSpace space;
 	
-	private AtomicInteger matches = new AtomicInteger(0);
+	private List<Match> matches = new ArrayList<Match>();
 	
 	/**
 	 * Register for take events on the space (will be used for matching later)
@@ -40,7 +42,7 @@ public class ServerBean {
 				try {
 					Match match = (Match) arrivedRemoteEvent.getObject();
 					System.out.println("Got match for provider #" + match.getProviderId());
-					matches.incrementAndGet();
+					matches.add(match);
 				} catch (UnusableEntryException e) {
 					e.printStackTrace();
 				}
@@ -50,7 +52,7 @@ public class ServerBean {
 		System.out.println("READY");
 	}
 	
-	public int getMatches() {
-		return matches.intValue();
+	public List<Match> getMatches() {
+		return matches;
 	}
 }

@@ -4,20 +4,30 @@ import com.gigaspaces.annotation.pojo.SpaceClass;
 
 @SpaceClass
 public class Match {
-	private Integer providerId;
+	private String providerId;
+	private String customerId;
 
 	public Match() { }
 	
-	public Match(Integer providerId) {
+	public Match(String providerId, String customerId) {
 		this.providerId = providerId;
+		this.customerId = customerId;
 	}
 	
-	public Integer getProviderId() {
+	public String getProviderId() {
 		return providerId;
 	}
 
-	public void setProviderId(Integer providerId) {
+	public void setProviderId(String providerId) {
 		this.providerId = providerId;
+	}
+
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 	
 }

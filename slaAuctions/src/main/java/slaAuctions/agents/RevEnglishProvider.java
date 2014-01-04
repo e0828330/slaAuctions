@@ -12,7 +12,7 @@ public class RevEnglishProvider extends Agent {
 	private int TIMEOUT = 60 * 1 * 1000; // 5 minutes hardcoded for now
 	
 	public RevEnglishProvider(ApplicationContext context, Template template) {
-		super(context, template);
+		super(context, template, template.getProviderId());
 	}
 
 	public void run() {

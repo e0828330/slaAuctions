@@ -25,7 +25,7 @@ public class DutchProviderBean {
 		space.write(template, Integer.MAX_VALUE);
 	}
 
-	public boolean waitForMatch(Integer providerId, Integer timeout) {
+	public boolean waitForMatch(String providerId, Integer timeout) {
 		Match result = space.take(new SQLQuery<Match>(Match.class, "providerId = ?", providerId), timeout);
 		return result != null;
 	}

@@ -14,7 +14,7 @@ public class DutchCustomer extends Agent {
 
 	
 	public DutchCustomer(ApplicationContext context, Template template) {
-		super(context, template);
+		super(context, template, template.getCustomerId());
 	}
 	
 	Date start = new Date();
@@ -24,7 +24,7 @@ public class DutchCustomer extends Agent {
 		while (true) {
 			Template match = bean.waitForMatch(template);
 			try {
-				bean.writeMatch(match.getUid());
+				bean.writeMatch(match.getUid(), id);
 				break;
 			} catch (TransactionAbortedException e) {
 				System.out.println("Customer was to late :/");

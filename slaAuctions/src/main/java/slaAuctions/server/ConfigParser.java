@@ -71,7 +71,7 @@ public class ConfigParser {
 		parseSimpleProviders("double");
 	}
 	
-	private Template createTemplate(Integer providerId, Integer customerId) {
+	private Template createTemplate(String providerId, String customerId) {
 		Template tpl = new Template();
 		tpl.setProviderId(providerId);
 		tpl.setCustomerId(customerId);
@@ -105,7 +105,8 @@ public class ConfigParser {
 	}
 
 	private void parseSimpleProviders(String type) {
-		for (int i = 0; i < Integer.parseInt(ini.get("Provider", type)); i++) {
+		int providers = ini.get("Provider", type) == null ? 0 : Integer.parseInt(ini.get("Provider", type));
+		for (int i = 0; i < providers; i++) {
 			System.out.println("Provider nr." + (id++) + " - type " + type);
 
 			minValues.clear();
@@ -141,13 +142,14 @@ public class ConfigParser {
 				}
 			}
 
-			provider.get(type).add(createTemplate(id - 1, null));
+			provider.get(type).add(createTemplate(type + (id - 1), null));
 			System.out.println("----");
 		}
 	}
 	
 	private void parseSimpleCustomers(String type) {
-		for (int i = 0; i < Integer.parseInt(ini.get("Customer", type)); i++) {
+		int customers = ini.get("Customer", type) == null ? 0 : Integer.parseInt(ini.get("Customer", type));
+		for (int i = 0; i < customers; i++) {
 			System.out.println("Customer nr." + (id++) + " - type " + type);
 
 			minValues.clear();
@@ -185,7 +187,7 @@ public class ConfigParser {
 				}
 			}
 
-			customer.get(type).add(createTemplate(null, id - 1));
+			customer.get(type).add(createTemplate(null, type + (id - 1)));
 			System.out.println("----");
 		}
 	}
