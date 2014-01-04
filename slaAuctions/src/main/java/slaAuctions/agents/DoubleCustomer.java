@@ -18,7 +18,7 @@ public class DoubleCustomer extends Agent {
 	
 	private CountDownLatch latch;
 	
-	private int TIMEOUT = 60 * 1 * 1000; // 1 minute hardcoded for now
+	private int TIMEOUT = 60 * 20; // 1 minute hardcoded for now
 	
 	public DoubleCustomer(ApplicationContext context, Template template, CountDownLatch latch) {
 		super(context, template, template.getCustomerId());
@@ -41,7 +41,7 @@ public class DoubleCustomer extends Agent {
 				bean.writeMatch(match.getUid(), id);
 				break;
 			} catch (TransactionAbortedException e) {
-				System.out.println("Customer was to late :/");
+				System.out.println("Customer " + id + " was to late for template " + match.getUid());
 			}
 			if (start.getTime() + TIMEOUT < (new Date()).getTime()) {
 				break;

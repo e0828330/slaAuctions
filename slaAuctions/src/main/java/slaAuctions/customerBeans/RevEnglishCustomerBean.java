@@ -37,7 +37,7 @@ public class RevEnglishCustomerBean {
 					if (!queryString.isEmpty()) {
 						queryString += " AND ";
 					}
-					queryString += " property" + i + "_current BETWEEN " + min + " AND " + max;
+					queryString += " property" + i + "_current BETWEEN " + (min-1) + " AND " + (max+1);
 				}
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
@@ -49,7 +49,9 @@ public class RevEnglishCustomerBean {
 			
 		}
 		
-		queryString += " AND price < " + tpl.getPrice_max();
+		queryString += " AND price <= " + tpl.getPrice_max();
+		
+		//System.out.println("customer query: " + queryString);
 
 		return space.read(new SQLQuery<Template>(Template.class, queryString), timeout);
 	}

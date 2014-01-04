@@ -38,7 +38,7 @@ public class ConfigParser {
 	private Ini ini;
 	
 	/* Stores the maximum number of properties */
-	private int maxProperies;
+	private int maxProperties;
 
 	private ArrayList<String> properties = new ArrayList<String>();
 	
@@ -51,13 +51,13 @@ public class ConfigParser {
 		provider.put("double", new ArrayList<Template>());
 		customer.put("double", new ArrayList<Template>());
 
-		maxProperies = 0;
+		maxProperties = 0;
 		for (String key : ini.keySet()) {
 			if (key.equals("Provider") || key.equals("Customer") || key.equals("Price")) {
 				continue;
 			}
 			properties.add(key);
-			maxProperies++;
+			maxProperties++;
 		}
 		
 		properties.add("Price");
@@ -105,7 +105,7 @@ public class ConfigParser {
 	}
 
 	private void parseSimpleProviders(String type) {
-		int providers = ini.get("Provider", type) == null ? 0 : Integer.parseInt(ini.get("Provider", type));
+		int providers = Integer.parseInt(ini.get("Provider", type));
 		for (int i = 0; i < providers; i++) {
 			System.out.println("Provider nr." + (id++) + " - type " + type);
 
@@ -113,7 +113,7 @@ public class ConfigParser {
 			maxValues.clear();
 			currentValues.clear();
 
-			int propertyCount = getPropertyCount(3, maxProperies);
+			int propertyCount = getPropertyCount(maxProperties, maxProperties);
 			
 			System.out.println("Number of properties: " + propertyCount);
 			
@@ -148,7 +148,7 @@ public class ConfigParser {
 	}
 	
 	private void parseSimpleCustomers(String type) {
-		int customers = ini.get("Customer", type) == null ? 0 : Integer.parseInt(ini.get("Customer", type));
+		int customers = Integer.parseInt(ini.get("Customer", type));
 		for (int i = 0; i < customers; i++) {
 			System.out.println("Customer nr." + (id++) + " - type " + type);
 
@@ -156,7 +156,7 @@ public class ConfigParser {
 			maxValues.clear();
 			currentValues.clear();
 			
-			int propertyCount = getPropertyCount(3, maxProperies);
+			int propertyCount = getPropertyCount(maxProperties, maxProperties);
 			
 			System.out.println("Number of properties: " + propertyCount);
 
@@ -194,7 +194,8 @@ public class ConfigParser {
 	
 	private Integer getPropertyCount(int min, int max) {
 		Random rand = new Random();
-		return rand.nextInt((max - min) + 1) + min;
+		//return rand.nextInt((max - min) + 1) + min;
+		return 1;
 	}
 
 	public Map<String, ArrayList<Template>> getProvider() {

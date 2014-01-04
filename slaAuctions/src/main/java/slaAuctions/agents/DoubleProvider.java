@@ -13,7 +13,7 @@ public class DoubleProvider extends Agent {
 
 	private CountDownLatch latch;
 	
-	private int TIMEOUT = 60 * 1 * 1000; // 1 minute hardcoded for now
+	private int TIMEOUT = 60 * 20; // 1 minute hardcoded for now
 	
 	public DoubleProvider(ApplicationContext context, Template template, CountDownLatch latch) {
 		super(context, template, template.getProviderId());

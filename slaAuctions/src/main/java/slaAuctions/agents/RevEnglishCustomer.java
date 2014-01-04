@@ -1,6 +1,7 @@
 package slaAuctions.agents;
 
 import java.util.Date;
+import java.util.LinkedList;
 
 import org.springframework.context.ApplicationContext;
 
@@ -14,13 +15,13 @@ public class RevEnglishCustomer extends Agent {
 		super(context, template, template.getCustomerId());
 	}
 	
-	private int TIMEOUT = 60 * 1 * 1000; // 1 minute hard coded for now
+	private int TIMEOUT = 1000 * 1; // 1 minute hard coded for now
 
 	public void run() {
 		RevEnglishCustomerBean bean = (RevEnglishCustomerBean) context.getBean("revEnglishCustomerBean");
 		bean.writeTemplate(template);
 		
-		String bestTpl = "";
+		LinkedList<String> templates = new LinkedList<String>();
 		Integer currentPrice = Integer.MAX_VALUE;
 		
 		Date start = new Date();
@@ -28,24 +29,26 @@ public class RevEnglishCustomer extends Agent {
 		Template match = bean.waitForMatch(template, Integer.MAX_VALUE);
 		
 		while(true) {
-			Template tpl = bean.waitForMatch(template, 5000);
+			Template tpl = bean.waitForMatch(template, 1000);
 			if (tpl != null) {
 				match = tpl;
 			}
 			if (match.getPrice() < currentPrice) {
 				currentPrice = match.getPrice();
 				template.setPrice(currentPrice);
-				bestTpl = match.getUid();
+				templates.addFirst(match.getUid());
 			}
 			if (start.getTime() + TIMEOUT < (new Date()).getTime()) {
 				break;
 			}
 		}
-		if (!bestTpl.isEmpty()) {
-			try {
-				bean.writeMatch(bestTpl, id);
-			} catch (TransactionAbortedException e) {
-				System.out.println("Customer was to late :/");
+		if (!templates.isEmpty()) {
+			for (String templateId : templates)  {
+				try {
+					bean.writeMatch(templateId, id);
+				} catch (TransactionAbortedException e) {
+					System.out.println("Customer " + id + " was to late for template " + templateId);
+				}
 			}
 		}
 	}

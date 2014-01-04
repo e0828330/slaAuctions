@@ -31,7 +31,7 @@ public class RevEnglishProviderBean {
 						queryString += " AND ";
 					}
 					queryString += " property" + i + "_min <= " + current + " AND ";
-					queryString += "property" + i + "_max <= " + current;
+					queryString += "property" + i + "_max >= " + current;
 				}
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
@@ -42,6 +42,8 @@ public class RevEnglishProviderBean {
 			}
 			
 		}
+		
+		//System.out.println("provider query: " + queryString);
 		
 		space.read(new SQLQuery<Template>(Template.class, queryString), Integer.MAX_VALUE);
 	}

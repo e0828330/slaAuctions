@@ -69,10 +69,10 @@ public class Main {
 			executor.execute(p);
 		}
 		
-		Thread.sleep(1000 * 60 * 2);
+		Thread.sleep(1000 * 30);
 		executor.shutdown();
 		System.out.println("WAITING FOR SHUTDOWN");
-		executor.awaitTermination(1, TimeUnit.MINUTES);
+		executor.awaitTermination(10, TimeUnit.SECONDS);
 		
 		for (Match m : bean.getMatches()) {
 			System.out.println("Match: provider " + m.getProviderId() + " and customer " + m.getCustomerId());
@@ -95,7 +95,7 @@ public class Main {
 		BigDecimal totalAgents = totalCustomers.add(totalProviders);
 		BigDecimal totalMatchedAgents = new BigDecimal(2 * bean.getMatches().size());
 		
-		BigDecimal totalMatchPercentage = totalMatchedAgents.divide(totalAgents, 2, RoundingMode.HALF_UP);
+		BigDecimal totalMatchPercentage = totalMatchedAgents.divide(totalAgents, 2, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
 		
 		System.out.println("total match percentage: " + totalMatchPercentage + "%");
 		

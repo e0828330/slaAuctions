@@ -44,7 +44,7 @@ public class DoubleCustomerBean {
 					if (!queryString.isEmpty()) {
 						queryString += " AND ";
 					}
-					queryString += " property" + i + "_current BETWEEN " + min + " AND " + max;
+					queryString += " property" + i + "_current BETWEEN " + (min-1) + " AND " + (max+1);
 				}
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
