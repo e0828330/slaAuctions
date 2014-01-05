@@ -16,7 +16,13 @@
 	
 	<os-core:giga-space-context />
 	
-	<os-core:space id="auctionSpace" url="/./auctionSpace" />
+	<os-core:space id="auctionSpace" url="/./auctionSpace">
+	<os-core:properties>
+        <props>
+            <prop key="space-config.serialization-type">1</prop>
+        </props>
+    </os-core:properties>
+	</os-core:space>
 
 	<os-core:local-tx-manager id="transactionManager" space="auctionSpace" default-timeout="3600" />
 
