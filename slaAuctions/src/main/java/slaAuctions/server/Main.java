@@ -23,6 +23,12 @@ import slaAuctions.providerBeans.ServerBean;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+		/* Check command line */
+		if (args.length != 1) {
+			System.err.println("Please supply a config file");
+			System.exit(1);
+		}
+		
 		/* Create app context */
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/Application.xml");
 		
@@ -33,9 +39,11 @@ public class Main {
 		
 		ExecutorService executor = Executors.newCachedThreadPool();
 		
-		
+		/* Parse config file */
 		ConfigParser parser = new ConfigParser();
 		parser.doParse(args[0]);
+		
+		/* Starts agents */
 		for (Template t : parser.getCustomer().get("english")) {
 			RevEnglishCustomer c = new RevEnglishCustomer(context, t);
 			executor.execute(c);
@@ -69,11 +77,13 @@ public class Main {
 			executor.execute(p);
 		}
 		
+		/* Wait for auctions to finish */
 		Thread.sleep(parser.getTimeout());
 		executor.shutdown();
 		System.out.println("WAITING FOR SHUTDOWN");
 		executor.awaitTermination(10, TimeUnit.SECONDS);
 		
+		/* Evaluate matches and create statistics */
 		int matchedDoubleCustomers = 0;
 		int matchedDoubleProviders = 0;
 		int matchedDutchCustomers = 0;
