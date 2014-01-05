@@ -35,7 +35,7 @@ public class Main {
 		
 		
 		ConfigParser parser = new ConfigParser();
-		parser.doParse();
+		parser.doParse(args[0]);
 		for (Template t : parser.getCustomer().get("english")) {
 			RevEnglishCustomer c = new RevEnglishCustomer(context, t);
 			executor.execute(c);
@@ -69,7 +69,7 @@ public class Main {
 			executor.execute(p);
 		}
 		
-		Thread.sleep(1000 * 30);
+		Thread.sleep(parser.getTimeout());
 		executor.shutdown();
 		System.out.println("WAITING FOR SHUTDOWN");
 		executor.awaitTermination(10, TimeUnit.SECONDS);

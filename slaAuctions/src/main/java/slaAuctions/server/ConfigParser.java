@@ -37,13 +37,14 @@ public class ConfigParser {
 	/* The ini file */
 	private Ini ini;
 	
-	/* Stores the maximum number of properties */
+	private int minProperties;
 	private int maxProperties;
+	private int timeout;
 
 	private ArrayList<String> properties = new ArrayList<String>();
 	
-	public void doParse() throws InvalidFileFormatException, IOException {
-		ini = new Ini(new File("src/main/resources/test.ini"));
+	public void doParse(String path) throws InvalidFileFormatException, IOException {
+		ini = new Ini(new File(path));
 		provider.put("english", new ArrayList<Template>());
 		customer.put("english", new ArrayList<Template>());
 		provider.put("dutch", new ArrayList<Template>());
@@ -51,13 +52,18 @@ public class ConfigParser {
 		provider.put("double", new ArrayList<Template>());
 		customer.put("double", new ArrayList<Template>());
 
-		maxProperties = 0;
 		for (String key : ini.keySet()) {
 			if (key.equals("Provider") || key.equals("Customer") || key.equals("Price")) {
 				continue;
 			}
+			if (key.equals("Config")) {
+				minProperties = Integer.parseInt(ini.get("Config", "minProperties"));
+				maxProperties = Integer.parseInt(ini.get("Config", "maxProperties"));
+				timeout = Integer.parseInt(ini.get("Config", "timeout"));
+				
+				continue;
+			}
 			properties.add(key);
-			maxProperties++;
 		}
 		
 		properties.add("Price");
@@ -113,7 +119,7 @@ public class ConfigParser {
 			maxValues.clear();
 			currentValues.clear();
 
-			int propertyCount = getPropertyCount(maxProperties, maxProperties);
+			int propertyCount = getPropertyCount(minProperties, maxProperties);
 			
 			System.out.println("Number of properties: " + propertyCount);
 			
@@ -156,7 +162,7 @@ public class ConfigParser {
 			maxValues.clear();
 			currentValues.clear();
 			
-			int propertyCount = getPropertyCount(maxProperties, maxProperties);
+			int propertyCount = getPropertyCount(minProperties, maxProperties);
 			
 			System.out.println("Number of properties: " + propertyCount);
 
@@ -194,8 +200,7 @@ public class ConfigParser {
 	
 	private Integer getPropertyCount(int min, int max) {
 		Random rand = new Random();
-		//return rand.nextInt((max - min) + 1) + min;
-		return 1;
+		return rand.nextInt((max - min) + 1) + min;
 	}
 
 	public Map<String, ArrayList<Template>> getProvider() {
@@ -208,6 +213,10 @@ public class ConfigParser {
 
 	public static void main(String[] args) throws InvalidFileFormatException, IOException {
 		ConfigParser parser = new ConfigParser();
-		parser.doParse();
+		parser.doParse(args[0]);
+	}
+	
+	public int getTimeout() {
+		return timeout;
 	}
 }
