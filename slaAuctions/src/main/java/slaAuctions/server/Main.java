@@ -84,43 +84,50 @@ public class Main {
 		executor.awaitTermination(10, TimeUnit.SECONDS);
 		
 		/* Evaluate matches and create statistics */
-		int matchedDoubleCustomers = 0;
-		int matchedDoubleProviders = 0;
-		int matchedDutchCustomers = 0;
-		int matchedDutchProviders = 0;
-		int matchedrevEnglishCustomers = 0;
-		int matchedRevEnglishProviders = 0;
-		int mixedMatches = 0;
+		int matchedDoubleCustomerDoubleProvider = 0;
+		int matchedDoubleCustomerDutchProvider = 0;
+		int matchedDoubleCustomerRevEnglishProvider = 0;
+		int matchedDutchCustomerDoubleProvider = 0;
+		int matchedDutchCustomerDutchProvider = 0;
+		int matchedDutchCustomerRevEnglishProvider = 0;
+		int matchedRevEnglishCustomerDoubleProvider = 0;
+		int matchedRevEnglishCustomerDutchProvider = 0;
+		int matchedRevEnglishCustomerRevEnglishProvider = 0;
 		
 		for (Match m : bean.getMatches()) {
 			System.out.println("Match: provider " + m.getProviderId() + " and customer " + m.getCustomerId());
-			String type = "";
-			if (m.getCustomerId().startsWith("dutch")) {
-				matchedDutchCustomers++;
-				type = "dutch";
-			}
 			if (m.getCustomerId().startsWith("double")) {
-				matchedDoubleCustomers++;
-				type = "double";
+				if (m.getProviderId().startsWith("double")) {
+					matchedDoubleCustomerDoubleProvider++;
+				}
+				if (m.getProviderId().startsWith("dutch")) {
+					matchedDoubleCustomerDutchProvider++;
+				}
+				if (m.getProviderId().startsWith("english")) {
+					matchedDoubleCustomerRevEnglishProvider++;
+				}
+			}
+			if (m.getCustomerId().startsWith("dutch")) {
+				if (m.getProviderId().startsWith("double")) {
+					matchedDutchCustomerDoubleProvider++;
+				}
+				if (m.getProviderId().startsWith("dutch")) {
+					matchedDutchCustomerDutchProvider++;
+				}
+				if (m.getProviderId().startsWith("english")) {
+					matchedDutchCustomerRevEnglishProvider++;
+				}
 			}
 			if (m.getCustomerId().startsWith("english")) {
-				matchedrevEnglishCustomers++;
-				type = "english";
-			}
-			if (m.getProviderId().startsWith("dutch")) {
-				matchedDutchProviders++;
-				if (!type.equals("dutch"))
-					mixedMatches++;
-			}
-			if (m.getProviderId().startsWith("double")) {
-				matchedDoubleProviders++;
-				if (!type.equals("double"))
-					mixedMatches++;
-			}
-			if (m.getProviderId().startsWith("english")) {
-				matchedRevEnglishProviders++;
-				if (!type.equals("english"))
-					mixedMatches++;
+				if (m.getProviderId().startsWith("double")) {
+					matchedRevEnglishCustomerDoubleProvider++;
+				}
+				if (m.getProviderId().startsWith("dutch")) {
+					matchedRevEnglishCustomerDutchProvider++;
+				}
+				if (m.getProviderId().startsWith("english")) {
+					matchedRevEnglishCustomerRevEnglishProvider++;
+				}
 			}
 		}
 		
@@ -140,6 +147,15 @@ public class Main {
 		
 		int totalAgents = totalCustomers + totalProviders;
 		int totalMatchedAgents = 2 * bean.getMatches().size();
+		
+		int matchedDoubleCustomers = matchedDoubleCustomerDoubleProvider + matchedDoubleCustomerDutchProvider + matchedDoubleCustomerRevEnglishProvider;
+		int matchedDutchCustomers = matchedDutchCustomerDoubleProvider + matchedDutchCustomerDutchProvider + matchedDutchCustomerRevEnglishProvider;
+		int matchedrevEnglishCustomers = matchedRevEnglishCustomerDoubleProvider + matchedRevEnglishCustomerDutchProvider + matchedRevEnglishCustomerRevEnglishProvider;
+		int matchedDoubleProviders = matchedDoubleCustomerDoubleProvider + matchedDutchCustomerDoubleProvider + matchedRevEnglishCustomerDoubleProvider;
+		int matchedDutchProviders = matchedDoubleCustomerDutchProvider + matchedDutchCustomerDutchProvider + matchedRevEnglishCustomerDutchProvider;
+		int matchedRevEnglishProviders = matchedDoubleCustomerRevEnglishProvider + matchedDutchCustomerRevEnglishProvider + matchedRevEnglishCustomerRevEnglishProvider;
+		
+		int mixedMatches = matchedDoubleCustomerDutchProvider + matchedDoubleCustomerRevEnglishProvider + matchedDutchCustomerDoubleProvider + matchedDutchCustomerRevEnglishProvider + matchedRevEnglishCustomerDoubleProvider + matchedRevEnglishCustomerDutchProvider;
 		
 		BigDecimal totalMatchPercentage = totalAgents == 0 ? BigDecimal.ZERO : new BigDecimal(100 * totalMatchedAgents).divide(new BigDecimal(totalAgents), 2, RoundingMode.HALF_UP);
 		
@@ -162,6 +178,16 @@ public class Main {
 		System.out.println("english provider match percentage: " + revEnglishProvidersMatchPercentage + "%\n");
 
 		System.out.println("mixed match percentage: " + mixedMatchPercentage + "%");
+		
+		System.out.println();
+		System.out.println("match table:");
+		System.out.println(String.format("%10s|%10s|%10s|%10s", "", "double p", "dutch p", "english p"));
+		System.out.println("----------+----------+----------+----------");
+		System.out.println(String.format("%10s|%10d|%10d|%10d", "double c", matchedDoubleCustomerDoubleProvider, matchedDoubleCustomerDutchProvider, matchedDoubleCustomerRevEnglishProvider));
+		System.out.println("----------+----------+----------+----------");
+		System.out.println(String.format("%10s|%10d|%10d|%10d", "dutch c", matchedDutchCustomerDoubleProvider, matchedDutchCustomerDutchProvider, matchedDutchCustomerRevEnglishProvider));
+		System.out.println("----------+----------+----------+----------");
+		System.out.println(String.format("%10s|%10d|%10d|%10d", "english c", matchedRevEnglishCustomerDoubleProvider, matchedRevEnglishCustomerDutchProvider, matchedRevEnglishCustomerRevEnglishProvider));
 		
 		context.destroy();
 		System.exit(0);
