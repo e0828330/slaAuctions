@@ -219,4 +219,12 @@ public class ConfigParser {
 	public int getTimeout() {
 		return timeout;
 	}
+	
+	public int getMinProperties() {
+		return minProperties;
+	}
+	
+	public int getMaxProperties() {
+		return maxProperties;
+	}
 }

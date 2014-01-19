@@ -1,5 +1,9 @@
 package slaAuctions.server;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.concurrent.CountDownLatch;
@@ -188,6 +192,19 @@ public class Main {
 		System.out.println(String.format("%10s|%10d|%10d|%10d", "dutch c", matchedDutchCustomerDoubleProvider, matchedDutchCustomerDutchProvider, matchedDutchCustomerRevEnglishProvider));
 		System.out.println("----------+----------+----------+----------");
 		System.out.println(String.format("%10s|%10d|%10d|%10d", "english c", matchedRevEnglishCustomerDoubleProvider, matchedRevEnglishCustomerDutchProvider, matchedRevEnglishCustomerRevEnglishProvider));
+		
+		PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("matches.csv", true)));
+		
+		writer.print("\n\n");
+		writer.println("min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer");
+		writer.println(parser.getMinProperties()+","+parser.getMaxProperties()+","+doubleProviders+","+dutchProviders+","+revEnglishProviders+","+doubleCustomers+","+dutchCustomers+","+revEnglishCustomers);
+		writer.println();
+		writer.println(",double provider,dutch provider,reverse english provider");
+		writer.println("double customer,"+matchedDoubleCustomerDoubleProvider+","+matchedDoubleCustomerDutchProvider+","+matchedDoubleCustomerRevEnglishProvider);
+		writer.println("dutch customer,"+matchedDutchCustomerDoubleProvider+","+matchedDutchCustomerDutchProvider+","+matchedDutchCustomerRevEnglishProvider);
+		writer.println("reverse english customer,"+matchedRevEnglishCustomerDoubleProvider+","+matchedRevEnglishCustomerDutchProvider+","+matchedRevEnglishCustomerRevEnglishProvider);
+		
+		writer.close();
 		
 		context.destroy();
 		System.exit(0);
