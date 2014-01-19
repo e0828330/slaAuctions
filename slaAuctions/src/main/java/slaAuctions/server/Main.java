@@ -170,7 +170,7 @@ public class Main {
 		BigDecimal dutchProvidersMatchPercentage = dutchProviders == 0 ? BigDecimal.ZERO : new BigDecimal(100 * matchedDutchProviders).divide(new BigDecimal(dutchProviders), 2, RoundingMode.HALF_UP);
 		BigDecimal revEnglishProvidersMatchPercentage = revEnglishProviders == 0 ? BigDecimal.ZERO : new BigDecimal(100 * matchedRevEnglishProviders).divide(new BigDecimal(revEnglishProviders), 2, RoundingMode.HALF_UP);
 
-		BigDecimal mixedMatchPercentage = totalMatchedAgents == 0 ? BigDecimal.ZERO : new BigDecimal(100 * mixedMatches).divide(new BigDecimal(totalMatchedAgents), 2, RoundingMode.HALF_UP);
+		BigDecimal mixedMatchPercentage = totalMatchedAgents == 0 ? BigDecimal.ZERO : new BigDecimal(100 * mixedMatches).divide(new BigDecimal(bean.getMatches().size()), 2, RoundingMode.HALF_UP);
 		
 		System.out.println("total match percentage: " + totalMatchPercentage + "%\n");
 
