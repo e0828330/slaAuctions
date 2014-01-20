@@ -70,3 +70,12 @@ min properties,max properties,double provider,dutch provider,reverse english pro
 double customer,298,89,148
 dutch customer,0,257,212
 reverse english customer,1,185,168
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,1,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,147,130,168
+dutch customer,0,320,190
+reverse english customer,0,67,233
