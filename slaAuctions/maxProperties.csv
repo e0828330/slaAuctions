@@ -1,0 +1,72 @@
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,9,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,149,82,76
+dutch customer,4,207,75
+reverse english customer,2,145,109
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,8,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,184,133,39
+dutch customer,1,113,245
+reverse english customer,1,84,173
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,7,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,220,102,46
+dutch customer,2,210,183
+reverse english customer,1,188,154
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,6,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,202,72,113
+dutch customer,0,150,86
+reverse english customer,2,277,211
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,5,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,202,81,58
+dutch customer,2,207,228
+reverse english customer,1,218,201
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,4,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,215,105,69
+dutch customer,1,252,220
+reverse english customer,1,157,256
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,3,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,222,184,50
+dutch customer,1,213,218
+reverse english customer,0,38,280
+
+
+min properties,max properties,double provider,dutch provider,reverse english provider,double customer,dutch customer,reverse english customer
+1,2,1000,1000,1000,1000,1000,1000
+
+,double provider,dutch provider,reverse english provider
+double customer,298,89,148
+dutch customer,0,257,212
+reverse english customer,1,185,168
